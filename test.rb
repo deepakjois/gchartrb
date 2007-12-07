@@ -1,0 +1,32 @@
+require 'google_chart'
+
+# Pie Chart
+pc = GoogleChart::PieChart.new('320x200', "Pie Chart",false)
+pc.data "Apples", 40
+pc.data "Banana", 20
+pc.data "Peach", 30
+pc.data "Orange", 60
+puts pc.to_url
+
+# Line Chart
+lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
+lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
+lc.show_legend = true 
+lc.show_labels = false
+lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
+lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
+puts lc.to_url
+
+# Bar Chart
+bc = GoogleChart::BarChart.new('800x200', "Bar Chart", :vertical, false)
+bc.data "Trend 1", [5,4,3,1,3,5], '0000ff' 
+bc.data "Trend 2", [1,2,3,4,5,6], 'ff0000'
+bc.data "Trend 3", [6,5,4,4,5,6], '00ff00'
+puts bc.to_url
+
+# Line XY Chart
+lcxy =  GoogleChart::LineChart.new('320x200', "Line XY Chart", true)
+lcxy.data "Trend 1", [[1,1], [2,2], [3,3], [4,4]], '0000ff'
+lcxy.data "Trend 2", [[4,5], [2,2], [1,1], [3,4]], '00ff00'
+puts lcxy.to_url
+

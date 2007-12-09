@@ -38,6 +38,7 @@ module GoogleChart
             set_size
             set_type
             set_colors
+            set_fill_options
             add_data
             add_labels(@labels) if show_labels
             add_legend(@labels) if show_legend
@@ -52,8 +53,29 @@ module GoogleChart
             @labels << name
             @colors << color if color
         end
+        
+        def fill(bg_or_c, type, options={})
+            case bg_or_c
+                when :background
+                    @background_fill = "bg," + process_fill_options(type, options)
+                when :chart
+                    @chart_fill = "c," + process_fill_options(type, options)
+            end
+        end
             
         protected
+        
+        def process_fill_options(type, options)
+            case type
+              when :solid
+                  "s,#{options[:color]}"
+              when :gradient
+                  "lg,#{options[:angle]}," + options[:color].collect { |o| "#{o.first},#{o.last}" }.join(",")
+              when :stripes
+                  "ls,#{options[:angle]}," + options[:color].collect { |o| "#{o.first},#{o.last}" }.join(",")
+            end
+                            
+        end
         
         def set_type
             params.merge!({:cht => cht})
@@ -65,6 +87,11 @@ module GoogleChart
         
         def set_colors
           params.merge!({:chco => @colors.collect{|c| c.downcase}.join(",")  }) if @colors.size > 0
+        end
+        
+        def set_fill_options
+             fill_opt = [@background_fill, @chart_fill].select{|v| v}.join("|") # A convoluted but quick way of eliminating null values
+             params.merge!({:chf => fill_opt}) if fill_opt.length > 0
         end
         
         def add_labels(labels)

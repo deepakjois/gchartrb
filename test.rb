@@ -44,3 +44,17 @@ vd.data "Red",   60, 'ff0000'
 vd.intersections 30,30,30,10
 puts vd.to_url
 
+# Solid fill
+lc.fill(:background, :solid, {:color => 'fff2cc'})
+lc.fill(:chart, :solid, {:color => 'ffcccc'})
+puts lc.to_url
+
+# Gradient fill
+lc.fill(:background, :gradient, {:angle => 0,  :color => [['76A4FB',1],['ffffff',0]]})
+lc.fill(:chart, :gradient, {:angle => 0, :color => [['76A4FB',1],['ffffff',0]]})
+puts lc.to_url
+
+# Stripes Fill
+lc.fill(:chart, :stripes, {:angle => 90, :color => [['76A4FB',0.2],['ffffff',0.2]]})
+puts lc.to_url
+

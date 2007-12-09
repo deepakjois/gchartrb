@@ -28,5 +28,19 @@ puts bc.to_url
 lcxy =  GoogleChart::LineChart.new('320x200', "Line XY Chart", true)
 lcxy.data "Trend 1", [[1,1], [2,2], [3,3], [4,4]], '0000ff'
 lcxy.data "Trend 2", [[4,5], [2,2], [1,1], [3,4]], '00ff00'
-puts lcxy.to_url
+puts lcxy.to_url 
+
+# Venn Diagram
+# Supply three vd.data statements of label, size, color for circles A, B, C
+# Then, an :intersections with four values:
+# the first value specifies the area of A intersecting B
+# the second value specifies the area of B intersecting C
+# the third value specifies the area of C intersecting A
+# the fourth value specifies the area of A intersecting B intersecting C
+vd = GoogleChart::VennDiagram.new("320x200", 'Venn Diagram') 
+vd.data "Blue", 100, '0000ff'
+vd.data "Green", 80, '00ff00'
+vd.data "Red",   60, 'ff0000'
+vd.intersections 30,30,30,10
+puts vd.to_url
 

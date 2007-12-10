@@ -40,6 +40,7 @@ module GoogleChart
             set_colors
             set_fill_options
             add_axis
+            add_grid  
             add_data
             add_labels(@labels) if show_labels
             add_legend(@labels) if show_legend
@@ -67,6 +68,13 @@ module GoogleChart
         def axis(type, options = {})
           raise "Illegal axis type" unless [:x, :y, :right, :top].member?(type)          
           @axis << [type, options]
+        end
+        
+        def grid(options={})
+          @grid_str = "#{options[:x_step].to_f},#{options[:y_step].to_f}"
+          if options[:length_segment] or options[:length_blank]
+             @grid_str += ",#{options[:length_segment].to_f},#{options[:length_blank].to_f}"
+          end
         end    
         
         protected
@@ -173,6 +181,10 @@ module GoogleChart
             params.merge!({ :chxp => chxp.compact.join("|") })  unless chxp.compact.empty?
             params.merge!({ :chxr => chxr.compact.join("|") })  unless chxr.compact.empty?
             params.merge!({ :chxs => chxs.compact.join("|") })  unless chxs.compact.empty?
+        end
+        
+        def add_grid
+          params.merge!({ :chg => @grid_str }) if @grid_str
         end
         
         def add_data

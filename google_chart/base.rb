@@ -12,11 +12,10 @@ module GoogleChart
                 @@complex_encoding[index_outer * 64 + index_inner] = outer + inner
             end
         end
-        # puts @@complex_encoding.inspect
-        
+
         attr_accessor :chs, :cht, :chtt, :data_encoding, :params, :show_legend, :show_labels 
     
-        # Define friendly aliases
+        # Define friendly aliases (FIXME probably a bad idea. Fix later)
         alias_attr_accessor :chart_title, :chtt
         alias_attr_accessor :chart_size, :chs
         alias_attr_accessor :chart_type, :cht
@@ -26,8 +25,9 @@ module GoogleChart
             @labels = []
             @data   = []
             @colors = []
+            @axis   = []
             self.chart_size    = chart_size
-            self.chart_title   = chart_title            
+            self.chart_title   = chart_title
             self.data_encoding = :simple
             self.show_legend   = true
             self.show_labels   = false
@@ -39,6 +39,7 @@ module GoogleChart
             set_type
             set_colors
             set_fill_options
+            add_axis
             add_data
             add_labels(@labels) if show_labels
             add_legend(@labels) if show_legend
@@ -54,7 +55,7 @@ module GoogleChart
             @colors << color if color
         end
         
-        def fill(bg_or_c, type, options={})
+        def fill(bg_or_c, type, options = {})
             case bg_or_c
                 when :background
                     @background_fill = "bg," + process_fill_options(type, options)
@@ -62,9 +63,14 @@ module GoogleChart
                     @chart_fill = "c," + process_fill_options(type, options)
             end
         end
-            
-        protected
         
+        def axis(type, options = {})
+          raise "Illegal axis type" unless [:x, :y, :right, :top].member?(type)          
+          @axis << [type, options]
+        end    
+        
+        protected
+                
         def process_fill_options(type, options)
             case type
               when :solid
@@ -90,7 +96,7 @@ module GoogleChart
         end
         
         def set_fill_options
-             fill_opt = [@background_fill, @chart_fill].select{|v| v}.join("|") # A convoluted but quick way of eliminating null values
+             fill_opt = [@background_fill, @chart_fill].compact.join("|")
              params.merge!({:chf => fill_opt}) if fill_opt.length > 0
         end
         
@@ -104,6 +110,69 @@ module GoogleChart
         
         def add_title
             params.merge!({:chtt => chart_title})
+        end
+        
+        def add_axis          
+            chxt = []
+            chxl = []
+            chxp = []
+            chxr = []                       
+            chxs = []
+            # Process params
+            @axis.each_with_index do |axis, idx|
+              # Find axis type
+              case axis.first
+                when :x
+                  chxt << "x"
+                when :y
+                  chxt << "y"
+                when :top
+                  chxt << "r"
+                when :right
+                  chxt << "t"
+              end
+              
+              # Axis labels
+              axis_opts = axis.last
+              
+              if axis_opts[:labels]
+                chxl[idx] = "#{idx}:|" + axis_opts[:labels].join("|")
+              end
+              
+              # Axis positions
+              if axis_opts[:positions]
+                chxp[idx] = "#{idx}," + axis_opts[:positions].join(",")
+              end
+              
+              # Axis range
+              if axis_opts[:range]
+                chxr[idx] = "#{idx},#{axis_opts[:range].first},#{axis_opts[:range].last}"                
+              end
+              
+              # Axis Styles
+              if axis_opts[:color] or axis_opts[:font_size] or axis_opts[:alignment]
+                if axis_opts[:alignment]
+                  alignment = case axis_opts[:alignment]
+                                when :center
+                                   0
+                                when :left
+                                  -1
+                                when :right
+                                   1 
+                                else
+                                   nil
+                              end
+                end
+                chxs[idx] = "#{idx}," + [axis_opts[:color], axis_opts[:font_size], alignment].compact.join(",")
+              end
+            end
+            
+            # Add to params hash
+            params.merge!({ :chxt => chxt.join(",") })          unless chxt.empty?
+            params.merge!({ :chxl => chxl.compact.join("|") })  unless chxl.compact.empty?
+            params.merge!({ :chxp => chxp.compact.join("|") })  unless chxp.compact.empty?
+            params.merge!({ :chxr => chxr.compact.join("|") })  unless chxr.compact.empty?
+            params.merge!({ :chxs => chxs.compact.join("|") })  unless chxs.compact.empty?
         end
         
         def add_data

@@ -1,7 +1,5 @@
 TODO List (Features)
 ====================
-* Put in license 
-* Chart and background fill
 * Axis labels
 * Grid lines
 * Markers
@@ -9,6 +7,9 @@ TODO List (Features)
 * Fill Area
 * Handle Missing Values (?)
 * Other charts (Scatter)
+* Download image
+* RDoc documentation
+* Put in license
 
 TODO List (Other)
 =================
@@ -16,4 +17,9 @@ TODO List (Other)
 
 Code Level Improvements
 =======================
+* Write tests that render different kinds of graphs
+* Remove the need for core_ext.rb file (stupid idea I was trying out earlier)
 * Use splats instead of attribute accessors to provide a neater API (?)
+* Improved error handling and reporting for things
+  * Number of labels and number poistion in axis must be the same
+  * Axis styles need to be specified in a certain way

@@ -15,6 +15,7 @@ lc.show_legend = true
 lc.show_labels = false
 lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
 lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
+lc.axis :y, :range => [0,6], :color => 'ff00ff', :font_size => 16, :alignment => :center
 puts lc.to_url
 
 # Bar Chart
@@ -50,11 +51,13 @@ lc.fill(:chart, :solid, {:color => 'ffcccc'})
 puts lc.to_url
 
 # Gradient fill
-lc.fill(:background, :gradient, {:angle => 0,  :color => [['76A4FB',1],['ffffff',0]]})
-lc.fill(:chart, :gradient, {:angle => 0, :color => [['76A4FB',1],['ffffff',0]]})
+lc.fill :background, :gradient, :angle => 0,  :color => [['76A4FB',1],['ffffff',0]]
+lc.fill :chart, :gradient, :angle => 0, :color => [['76A4FB',1],
+                                                   ['ffffff',0]]
 puts lc.to_url
 
 # Stripes Fill
-lc.fill(:chart, :stripes, {:angle => 90, :color => [['76A4FB',0.2],['ffffff',0.2]]})
+lc.fill :chart, :stripes, :angle => 90, :color => [['76A4FB',0.2],
+                                                   ['ffffff',0.2]]
 puts lc.to_url
 

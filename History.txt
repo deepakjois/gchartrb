@@ -1,0 +1,9 @@
+== 0.2 / 2007-12-11
+
+* Removed hoe dependency 
+* Doc fixes
+
+== 0.1 / 2007-12-11
+
+* Initial Release
+* RDoc documentation

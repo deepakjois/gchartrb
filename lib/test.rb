@@ -63,3 +63,10 @@ lc.fill :chart, :stripes, :angle => 90, :color => [['76A4FB',0.2],
                                                    ['ffffff',0.2]]
 puts lc.to_url
 
+# Adding Extra params
+lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
+lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
+lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
+lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
+puts lc.to_url({:chm => "r,000000,0,0.1,0.5"}) # Single black line as a horizontal marker
+

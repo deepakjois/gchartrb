@@ -13,12 +13,7 @@ module GoogleChart
             end
         end
 
-        attr_accessor :chs, :cht, :chtt, :data_encoding, :params, :show_legend, :show_labels 
-    
-        # Define friendly aliases (FIXME probably a bad idea. Fix later)
-        alias_attr_accessor :chart_title, :chtt
-        alias_attr_accessor :chart_size, :chs
-        alias_attr_accessor :chart_type, :cht
+        attr_accessor :chart_size, :chart_type, :chart_title, :data_encoding, :params, :show_legend, :show_labels 
     
         def initialize(chart_size, chart_title)
             self.params = Hash.new
@@ -33,7 +28,16 @@ module GoogleChart
             self.show_labels   = false
         end
         
-        def to_url
+        # Generates the URL string that can be used to retrieve the graph image in PNG format.
+        # Use this after assigning all the properties to the graph
+        # You can pass in additional params as a hash for features that may not have been implemented
+        # For e.g
+        #      lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
+        #      lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
+        #      lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
+        #      lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
+        #      puts lc.to_url({:chm => "000000,0,0.1,0.11"}) # Single black line as a horizontal marker        
+        def to_url(extras={})
             params.clear
             set_size
             set_type
@@ -46,16 +50,50 @@ module GoogleChart
             add_legend(@labels) if show_legend
             add_title  if chart_title.to_s.length > 0 
             
+            params.merge!(extras)
             query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s)}" }.join('&')
             BASE_URL + query_string
         end
         
+        # Adds the data to the chart, according to the type of the graph being generated.
+        #
+        # [+name+] is a string containing a label for the data.
+        # [+value+] is either a number or an array of numbers containing the data. Pie Charts and Venn Diagrams take a single number, but other graphs require an array of numbers
+        # [+color+ (optional)] is a hexadecimal RGB value for the color to represent the data
+        # 
+        # ==== Examples
+        #
+        # for GoogleChart::LineChart (normal)
+        #    lc.data "Trend 1", [1,2,3,4,5], 'ff00ff'
+        #
+        # for GoogleChart::LineChart (XY chart)
+        #    lc.data "Trend 2", [[4,5], [2,2], [1,1], [3,4]], 'ff00ff'
+        #
+        # for GoogleChart::PieChart
+        #    lc.data "Apples", 5, 'ff00ff'
+        #    lc.data "Oranges", 7, '00ffff'
         def data(name, value, color=nil)
             @data << value
             @labels << name
             @colors << color if color
         end
         
+        # Adds a background or chart fill. Call this option twice if you want both a background and a chart fill
+        # [+bg_or_c+] Can be one of <tt>:background</tt> or <tt>:chart</tt> depending on the kind of fill requested
+        # [+type+] Can be one of <tt>:solid</tt>, <tt>:gradient</tt> or <tt>:stripes</tt>
+        # [+options+] : Options depend on the type of fill selected above
+        #
+        # ==== Options
+        # For <tt>:solid</tt> type
+        # * A <tt>:color</tt> option which specifies the RGB hex value of the color to be used as a fill. For e.g <tt>lc.fill(:chart, :solid, {:color => 'ffcccc'})</tt>
+        #
+        # For <tt>:gradient</tt> type
+        # * An <tt>:angle</p>, which is the angle of the gradient between 0(horizontal) and 90(vertical)
+        # * A <tt>:color</tt> option which is a 2D array containing the colors and an offset each, which specifies at what point the color is pure where: 0 specifies the right-most chart position and 1 the left-most. e,g <tt>lc.fill :background, :gradient, :angle => 0,  :color => [['76A4FB',1],['ffffff',0]]</tt>
+        # 
+        # For <tt>:stripes</tt> type
+        # * An <tt>:angle</p>, which is the angle of the stripe between 0(horizontal) and 90(vertical)
+        # * A <tt>:color</tt> option which is a 2D array containing the colors and width value each, which must be between 0 and 1 where 1 is the full width of the chart. for e.g <tt>lc.fill :chart, :stripes, :angle => 90, :color => [ ['76A4FB',0.2], ['ffffff',0.2] ]</tt>
         def fill(bg_or_c, type, options = {})
             case bg_or_c
                 when :background
@@ -65,10 +103,43 @@ module GoogleChart
             end
         end
         
+        # Adds an axis to the graph. Not applicable for Pie Chart (GoogleChart::PieChart) or Venn Diagram (GoogleChart::VennDiagram)
+        # 
+        # [+type+] is a symbol which can be one of <tt>:x</tt>, <tt>:y</tt>, <tt>:right</tt>, <tt>:top</tt> 
+        # [+options+] is a hash containing the options (see below)
+        # 
+        # ==== Options
+        # Not all the options are mandatory.
+        # [<tt>:labels</tt>] An array containing the labels for the axis
+        # [<tt>:position</tt>] An Array containing the positions for the labels
+        # [<tt>:range</tt>] An array containing 2 elements, the start value and end value
+        # 
+        # axis styling options have to be specified as follows
+        # [<tt>:color</tt>] Hexadecimal RGB value for the color to represent the data for the axis labels
+        # [<tt>:font_size</tt>] Font size of the labels in pixels
+        # [<tt>:alignment</tt>] can be one of <tt>:left</tt>, <tt>:center</tt> or <tt>:right</tt>
+        # 
+        # ==== Examples
+        #     lc.axis :y, :range => [0,6], :color => 'ff00ff', :font_size => 16, :alignment => :center
+        #       
         def axis(type, options = {})
           raise "Illegal axis type" unless [:x, :y, :right, :top].member?(type)          
           @axis << [type, options]
         end
+        
+        # Adds a grid to the graph. Applicable only for Line Chart (GoogleChart::LineChart) and Scatter Chart (available soon)
+        #
+        # [+options+] is a hash containing the options (see below) 
+        #
+        # === Options
+        # [<tt>:xstep</tt>] X axis step size
+        # [<tt>:ystep</tt>] Y axis step size
+        # [<tt>:length_segment</tt> (optional)] Length of the line segement. Useful with the :length_blank value to have dashed lines
+        # [<tt>:length_blank</tt> (optional)] Length of the blank segment. use 0 if you want a solid grid
+        # 
+        # === Examples
+        #     lc.grid :x_step => 5, :y_step => 5, :length_segment => 1, :length_blank => 0
+        #
         
         def grid(options={})
           @grid_str = "#{options[:x_step].to_f},#{options[:y_step].to_f}"
@@ -92,7 +163,7 @@ module GoogleChart
         end
         
         def set_type
-            params.merge!({:cht => cht})
+            params.merge!({:cht => chart_type})
         end
         
         def set_size

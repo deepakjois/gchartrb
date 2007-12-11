@@ -1,3 +1,7 @@
+== 0.3 / 2007-12-11
+
+* Google changed Pie chart implementation to disable legends. Fixed in API.
+
 == 0.2 / 2007-12-11
 
 * Removed hoe dependency 

@@ -8,6 +8,8 @@ module GoogleChart
         def initialize(chart_size='300x200', chart_title=nil, is_3d = false)
             super(chart_size, chart_title)
             self.is_3d = is_3d
+            self.show_labels = true
+            self.show_legend = false
         end
 
         # Set this value to <tt>true</tt> if you want the Pie Chart to be rendered as a 3D image

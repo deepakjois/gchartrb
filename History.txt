@@ -1,3 +1,7 @@
+== 0.4.1
+
+* Removed some spurious debug statements
+
 == 0.4
 
 * Fixed issue when all data points are 0 in Line XY Chart (Thanks Cedric)

@@ -18,12 +18,10 @@ module GoogleChart
     end
 
     def max_x_value
-      puts "Max x value is #{x_data.flatten.max}"
       x_data.flatten.max
     end
 
     def max_y_value
-      puts "Max y value is #{y_data.flatten.max}"
       y_data.flatten.max
     end
 

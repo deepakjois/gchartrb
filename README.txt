@@ -95,7 +95,15 @@ However, you can still make use of the API to insert arbitrary parameters
     vd.data "Red",   60, 'ff0000'
     vd.intersections 30,30,30,10
     puts vd.to_url
-
+    
+    # Scatter Chart
+    sc = GoogleChart::ScatterChart.new('320x200',"Scatter Chart")
+    sc.data "Scatter Set", [[1,1,], [2,2], [3,3], [4,4]]
+    sc.axis :x, :range => [0,4]
+    sc.axis :y, :range => [0,4]
+    sc.point_sizes [10,15,30,55] # Optional
+    puts sc.to_url
+    
     # Solid fill
     lc.fill(:background, :solid, {:color => 'fff2cc'})
     lc.fill(:chart, :solid, {:color => 'ffcccc'})

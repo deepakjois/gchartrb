@@ -1,3 +1,8 @@
+== 0.5
+
+* Added Scatter Chart Support
+* Documentation Updates
+
 == 0.4.1
 
 * Removed some spurious debug statements

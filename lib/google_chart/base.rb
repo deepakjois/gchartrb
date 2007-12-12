@@ -127,7 +127,7 @@ module GoogleChart
           @axis << [type, options]
         end
         
-        # Adds a grid to the graph. Applicable only for Line Chart (GoogleChart::LineChart) and Scatter Chart (available soon)
+        # Adds a grid to the graph. Applicable only for Line Chart (GoogleChart::LineChart) and Scatter Chart (GoogleChart::ScatterChart)
         #
         # [+options+] is a hash containing the options (see below) 
         #
@@ -330,5 +330,27 @@ module GoogleChart
         def join_encoded_data(encoded_data)
             encoded_data.join((self.data_encoding == :simple) ? "," : "|")
         end
+        
+        ## Applicable to Line Charts and Scatter Charts only
+        
+        def max_x_value
+          x_data.flatten.max
+        end
+
+        def max_y_value
+          y_data.flatten.max
+        end
+
+        def x_data
+          @data.collect do |series|
+            series.collect { |val| val.first }
+          end
+        end
+
+        def y_data
+          @data.collect do |series|
+            series.collect { |val| val.last }
+          end
+        end        
     end
 end

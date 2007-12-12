@@ -6,6 +6,7 @@ pc.data "Apples", 40
 pc.data "Banana", 20
 pc.data "Peach", 30
 pc.data "Orange", 60
+puts "Pie Chart"
 puts pc.to_url
 
 # Line Chart
@@ -18,6 +19,7 @@ lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
 lc.axis :y, :range => [0,6], :color => 'ff00ff', :font_size => 16, :alignment => :center
 lc.axis :x, :range => [0,6], :color => '00ffff', :font_size => 16, :alignment => :center
 lc.grid :x_step => 100.0/6.0, :y_step => 100.0/6.0, :length_segment => 1, :length_blank => 0
+puts "Line Chart"
 puts lc.to_url
 
 # Bar Chart
@@ -25,12 +27,14 @@ bc = GoogleChart::BarChart.new('800x200', "Bar Chart", :vertical, false)
 bc.data "Trend 1", [5,4,3,1,3,5], '0000ff' 
 bc.data "Trend 2", [1,2,3,4,5,6], 'ff0000'
 bc.data "Trend 3", [6,5,4,4,5,6], '00ff00'
+puts "Bar Chart"
 puts bc.to_url
 
 # Line XY Chart
 lcxy =  GoogleChart::LineChart.new('320x200', "Line XY Chart", true)
 lcxy.data "Trend 1", [[1,1], [2,2], [3,3], [4,4]], '0000ff'
 lcxy.data "Trend 2", [[4,5], [2,2], [1,1], [3,4]], '00ff00'
+puts "Line XY Chart"
 puts lcxy.to_url 
 
 # Venn Diagram
@@ -45,7 +49,17 @@ vd.data "Blue", 100, '0000ff'
 vd.data "Green", 80, '00ff00'
 vd.data "Red",   60, 'ff0000'
 vd.intersections 30,30,30,10
+puts "Venn Diagram"
 puts vd.to_url
+
+# Scatter Chart
+sc = GoogleChart::ScatterChart.new('320x200',"Scatter Chart")
+sc.data "Scatter Set", [[1,1,], [2,2], [3,3], [4,4]]
+sc.axis :x, :range => [0,4]
+sc.axis :y, :range => [0,4]
+sc.point_sizes [10,15,30,55]
+puts "Scatter Chart"
+puts sc.to_url
 
 # Solid fill
 lc.fill(:background, :solid, {:color => 'fff2cc'})

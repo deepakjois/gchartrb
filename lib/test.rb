@@ -55,8 +55,9 @@ puts vd.to_url
 # Scatter Chart
 sc = GoogleChart::ScatterChart.new('320x200',"Scatter Chart")
 sc.data "Scatter Set", [[1,1,], [2,2], [3,3], [4,4]]
-sc.axis :x, :range => [0,4]
-sc.axis :y, :range => [0,4]
+sc.max_value [5,5] # Setting the max value
+sc.axis :x, :range => [0,5]
+sc.axis :y, :range => [0,5], :labels => [0,1,2,3,4,5]
 sc.point_sizes [10,15,30,55] # Optional
 puts "Scatter Chart"
 puts sc.to_url

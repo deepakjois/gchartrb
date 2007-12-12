@@ -51,7 +51,7 @@ module GoogleChart
             add_title  if chart_title.to_s.length > 0 
             
             params.merge!(extras)
-            query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s)}" }.join('&')
+            query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s).gsub(/%20/,'+').gsub(/%7C/,'|')}" }.join('&')
             BASE_URL + query_string
         end
         
@@ -76,6 +76,29 @@ module GoogleChart
             @data << value
             @labels << name
             @colors << color if color
+        end
+        
+        # Allows (optional) setting of a max value for the chart, which will be used for data encoding and axis plotting.
+        # The value to pass depends on the type of chart
+        # * For Line Chart and Bar Charts it should be a single integer or float value
+        # * For Scatter Charts and Line XY Charts, you MUST pass an array containing the maximum values for X and Y
+        # 
+        # ==== Examples
+        # For bar charts
+        #    bc.max_value 5 # 5 will be used to calculate the relative encoding values
+        # For scatter chart
+        #    sc.max_value [5,6] # 5 is the max x value and 6 is the max y value
+        #
+        # Note : MAKE SURE you are passing the right values otherwise an exception will be raised
+        def max_value(value)
+          if [:lxy, :s].member?(self.chart_type) and value.is_a?(Array)
+            @max_x = value.first
+            @max_y = value.last
+          elsif [:lc,:bhg,:bhs,:bvg,:bvs] and (value.is_a?(Integer) or value.is_a?(Float))
+            @max_data = value
+          else
+            raise "Invalid max value for this chart type"
+          end
         end
         
         # Adds a background or chart fill. Call this option twice if you want both a background and a chart fill
@@ -331,14 +354,18 @@ module GoogleChart
             encoded_data.join((self.data_encoding == :simple) ? "," : "|")
         end
         
+        def max_data_value
+          @max_data or @data.flatten.max
+        end
+        
         ## Applicable to Line Charts and Scatter Charts only
         
         def max_x_value
-          x_data.flatten.max
+          @max_x or x_data.flatten.max
         end
 
         def max_y_value
-          y_data.flatten.max
+          @max_y or y_data.flatten.max
         end
 
         def x_data

@@ -35,13 +35,12 @@ module GoogleChart
       end
 
       def process_data
-          if @data.size > 1
-              max_value = @data.flatten.max
+          if @data.size > 1              
                 join_encoded_data(@data.collect { |series|
-                  encode_data(series, max_value)
+                  encode_data(series, max_data_value)
                 })
           else
-              encode_data(@data.flatten)
+              encode_data(@data.flatten,max_data_value)
           end
       end
       

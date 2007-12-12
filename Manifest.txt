@@ -4,6 +4,7 @@ Manifest.txt
 README.txt
 Rakefile
 TODO
+lib/example.rb
 lib/google_chart.rb
 lib/google_chart/bar_chart.rb
 lib/google_chart/base.rb

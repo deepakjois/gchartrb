@@ -51,14 +51,13 @@ module GoogleChart
             encoded_data << join_encoded_data([encode_data(x_data[i],max_x_value), encode_data(y_data[i],max_y_value)])
           }
           join_encoded_data(encoded_data)
-        else # Line graph multiple data series
-          max_value = @data.flatten.max
+        else # Line graph multiple data series          
           join_encoded_data(@data.collect { |series|
-            encode_data(series, max_value)
+            encode_data(series, max_data_value)
           })
         end
       else
-        encode_data(@data.flatten)
+        encode_data(@data.flatten, max_data_value)
       end
     end
   end

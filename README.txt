@@ -29,7 +29,6 @@ Download the latest release from http://code.google.com/p/gchartrb/downloads/lis
 == Problems/TODO
 The following features are pending :
 
-* Scatter Charts
 * Horizontal and Vertical range Markers
 * Line Styles
 * Shape Markers

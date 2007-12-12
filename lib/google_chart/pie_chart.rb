@@ -22,7 +22,7 @@ module GoogleChart
         end
 
         def process_data
-            encode_data(@data)
+            encode_data(@data, max_data_value)
         end
     end
 end

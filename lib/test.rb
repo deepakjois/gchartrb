@@ -70,3 +70,11 @@ lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
 lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
 puts lc.to_url({:chm => "r,000000,0,0.1,0.5"}) # Single black line as a horizontal marker
 
+# Bryan Error condition
+lcxy =  GoogleChart::LineChart.new('320x200', "Line XY Chart", true)
+lcxy.data 'A', [[0, 32], [1, 15], [2, 23], [3, 18], [4, 41],  [5, 53]],'0000ff'
+lcxy.data 'B', [[0, 73], [1, 0],  [2, 28], [3, 0],  [4, 333], [5, 0]], '00ff00'
+lcxy.data 'C', [[0, 22], [1, 26], [2, 14], [3, 33], [4, 17],  [5, 7]], 'ff0000'
+lcxy.data 'D', [[0, 4],  [1, 39], [2, 0],  [3, 5],  [4, 11],  [5, 14]], 'cc00ff'
+puts lcxy.to_url
+

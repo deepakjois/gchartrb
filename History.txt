@@ -1,3 +1,8 @@
+== 0.4
+
+* Fixed issue when all data points are 0 in Line XY Chart (Thanks Cedric)
+* Proper calculation of max values for Line XY chart (Thanks Bryan Donovan)
+
 == 0.3 / 2007-12-11
 
 * Google changed Pie chart implementation to disable legends. Fixed in API.

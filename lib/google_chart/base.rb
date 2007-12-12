@@ -276,11 +276,11 @@ module GoogleChart
         def encode_data(values, max_value=nil)
             case data_encoding
                 when :simple
-                    simple_encode(values)
+                    simple_encode(values, max_value)
                 when :text
-                    text_encode(values)
+                    text_encode(values, max_value)
                 when :extended
-                    extended_encode(values)
+                    extended_encode(values, max_value)
                 else
                     raise "Illegal Encoding Specified"
             end
@@ -291,8 +291,12 @@ module GoogleChart
             max_value = values.max unless max_value
 
             chart_data = values.collect do |val|              
-                    if val.to_i >=0  
+                    if val.to_i >=0
+                      if max_value == 0  
+                        SIMPLE_ENCODING[0]
+                      else
                         SIMPLE_ENCODING[(alphabet_length * val / max_value).to_i]
+                      end
                     else
                         "_"
                     end
@@ -304,13 +308,23 @@ module GoogleChart
         def text_encode(values, max_value=nil)
              max_value = values.max unless max_value
              values.inject("") { |sum, v|
-               sum += ( "%.1f" % (v*100/max_value) ) + ","
+               if max_value == 0
+                 sum += "0,"
+               else
+                 sum += ( "%.1f" % (v*100/max_value) ) + ","
+               end
              }.chomp(",")
         end
         
         def extended_encode(values, max_value)
             max_value = values.max unless max_value
-            values.collect { |v| @@complex_encoding[(v * 4095/max_value).to_i]}.join('')
+            values.collect { |v| 
+              if max_value == 0
+                @@complex_encoding[0]
+              else
+                @@complex_encoding[(v * 4095/max_value).to_i]
+              end
+            }.join('')
         end
         
         def join_encoded_data(encoded_data)

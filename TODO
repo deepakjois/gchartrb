@@ -1,13 +1,13 @@
 TODO List (Features)
 ====================
-* Axis labels
-* Grid lines
 * Markers
 * Line Styles
 * Fill Area
 * Handle Missing Values (?)
 * Other charts (Scatter)
 * Download image
+* Friendly color values
+* Helper methods for standard chart types like Sparklines etc.
 
 TODO List (Other)
 =================
@@ -15,9 +15,10 @@ TODO List (Other)
 
 Code Level Improvements
 =======================
+* Automate upload to google code
 * Write tests that render different kinds of graphs
-* Remove the need for core_ext.rb file (stupid idea I was trying out earlier)
 * Use splats instead of attribute accessors to provide a neater API (?)
+* Clean up encoding, especially the handling of 'missing' values
 * Improved error handling and reporting for things
-  * Number of labels and number of postions in axis must be the same
+  * Number of labels and number of postions in axis must be the same (?)
   * Axis styles need to be specified in a certain way

@@ -1,13 +1,17 @@
-== 0.5
+== 0.5.1 / 2007-12-12
+
+* Added support for max_value method to specify maximum values to plot against
+
+== 0.5 / 2007-12-12
 
 * Added Scatter Chart Support
 * Documentation Updates
 
-== 0.4.1
+== 0.4.1 / 2007-12-12
 
 * Removed some spurious debug statements
 
-== 0.4
+== 0.4 / 2007-12-12
 
 * Fixed issue when all data points are 0 in Line XY Chart (Thanks Cedric)
 * Proper calculation of max values for Line XY chart (Thanks Bryan Donovan)

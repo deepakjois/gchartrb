@@ -13,8 +13,30 @@ module GoogleChart
             end
         end
 
-        attr_accessor :chart_size, :chart_type, :chart_title, :data_encoding, :params, :show_legend, :show_labels 
-    
+        # Size of the chart in WIDTHxHEIGHT format
+        attr_accessor :chart_size 
+        
+        # Type of the chart. Usually, you do not need to set this yourself
+        attr_accessor :chart_type 
+        
+        # Chart title
+        attr_accessor :chart_title
+        
+        # RRGGBB hex value for the color of the title
+        attr_accessor :title_color
+        
+        # Font size of the title
+        attr_accessor :title_font_size
+         
+        # Data encoding to use. Can be one of <tt>:simple</tt>, <tt>:text</tt> or <tt>:extended</tt> (see http://code.google.com/apis/chart/#chart_data)
+        attr_accessor :data_encoding
+        
+        # A hash of the params used to construct the URL        
+        attr_accessor :params
+        
+        # Set to <tt>true</tt> or <tt>false</tt> to show or hide the chart legend. Not applicable for Scatter Chart.
+        attr_accessor :show_legend
+        
         def initialize(chart_size, chart_title)
             self.params = Hash.new
             @labels = []
@@ -25,7 +47,6 @@ module GoogleChart
             self.chart_title   = chart_title
             self.data_encoding = :simple
             self.show_legend   = true
-            self.show_labels   = false
         end
         
         # Generates the URL string that can be used to retrieve the graph image in PNG format.
@@ -46,7 +67,7 @@ module GoogleChart
             add_axis
             add_grid  
             add_data
-            add_labels(@labels) if show_labels
+            add_labels(@labels) if [:p, :p3].member?(self.chart_type)
             add_legend(@labels) if show_legend
             add_title  if chart_title.to_s.length > 0 
             
@@ -111,11 +132,11 @@ module GoogleChart
         # * A <tt>:color</tt> option which specifies the RGB hex value of the color to be used as a fill. For e.g <tt>lc.fill(:chart, :solid, {:color => 'ffcccc'})</tt>
         #
         # For <tt>:gradient</tt> type
-        # * An <tt>:angle</p>, which is the angle of the gradient between 0(horizontal) and 90(vertical)
+        # * An <tt>:angle</tt>, which is the angle of the gradient between 0(horizontal) and 90(vertical)
         # * A <tt>:color</tt> option which is a 2D array containing the colors and an offset each, which specifies at what point the color is pure where: 0 specifies the right-most chart position and 1 the left-most. e,g <tt>lc.fill :background, :gradient, :angle => 0,  :color => [['76A4FB',1],['ffffff',0]]</tt>
         # 
         # For <tt>:stripes</tt> type
-        # * An <tt>:angle</p>, which is the angle of the stripe between 0(horizontal) and 90(vertical)
+        # * An <tt>:angle</tt>, which is the angle of the stripe between 0(horizontal) and 90(vertical)
         # * A <tt>:color</tt> option which is a 2D array containing the colors and width value each, which must be between 0 and 1 where 1 is the full width of the chart. for e.g <tt>lc.fill :chart, :stripes, :angle => 90, :color => [ ['76A4FB',0.2], ['ffffff',0.2] ]</tt>
         def fill(bg_or_c, type, options = {})
             case bg_or_c
@@ -203,7 +224,7 @@ module GoogleChart
         end
         
         def add_labels(labels)
-            params.merge!({:chl => labels.collect{|l| l.to_s}.join("|") }) 
+            params.merge!({:chl => labels.collect{|l| l.to_s}.join("|") }) if self.show_labels 
         end                
     
         def add_legend(labels)
@@ -212,6 +233,7 @@ module GoogleChart
         
         def add_title
             params.merge!({:chtt => chart_title})
+            params.merge!({:chts => title_color}) if title_color
         end
         
         def add_axis          
@@ -357,9 +379,7 @@ module GoogleChart
         def max_data_value
           @max_data or @data.flatten.max
         end
-        
-        ## Applicable to Line Charts and Scatter Charts only
-        
+                
         def max_x_value
           @max_x or x_data.flatten.max
         end

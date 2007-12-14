@@ -18,7 +18,6 @@ module GoogleChart
           @alignment = alignment
           @stacked = stacked
           set_chart_type
-          self.show_labels = false
           self.show_legend = true
       end
       

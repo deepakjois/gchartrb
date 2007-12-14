@@ -56,9 +56,6 @@ series_2_x.each_with_index do |v,i|
   series_2_xy[i] = [v-1, series_2_y[i ] ]
 end
 
-puts series_1_xy.inspect
-puts series_2_xy.inspect
-
 lcxy = GoogleChart::LineChart.new('800x300', "Projected Christmas Cheer for 2007", true)
 lcxy.data "2006", series_1_xy, '458B00'
 lcxy.data "2007", series_2_xy, 'CD2626'
@@ -68,3 +65,14 @@ lcxy.axis :x, :labels => x_axis_labels
 lcxy.axis :y, :labels => y_axis_labels
 lcxy.grid :x_step => 3.333, :y_step => 10, :length_segment => 1, :length_blank => 3
 puts lcxy.to_url
+
+
+# Plotting a sparklines chart
+sparklines = GoogleChart::LineChart.new('100x40', nil, false)
+sparklines.data "Test", [4,3,2,4,6,8,10]
+sparklines.show_legend = false
+sparklines.axis :x, :labels => []
+sparklines.axis :y, :labels => []
+puts sparklines.to_url(:chxs => "0,000000,10,0,_|1,000000,10,0,_")
+
+

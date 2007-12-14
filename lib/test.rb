@@ -9,11 +9,15 @@ pc.data "Orange", 60
 puts "\nPie Chart"
 puts pc.to_url
 
+# Pie Chart with no labels
+pc.show_labels = false
+puts "\nPie Chart (with no labels)"
+puts pc.to_url
+
 # Line Chart
 lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
 lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
-lc.show_legend = true 
-lc.show_labels = false
+lc.show_legend = true
 lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
 lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
 lc.axis :y, :range => [0,6], :color => 'ff00ff', :font_size => 16, :alignment => :center
@@ -83,6 +87,7 @@ puts lc.to_url
 
 # Adding Extra params
 lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
+lc.title_color = 'ff00ff'
 lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
 lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
 lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'

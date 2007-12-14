@@ -19,4 +19,25 @@ Hoe.new('gchartrb', "0.5.1") do |p|
   p.remote_rdoc_dir = ''
 end
 
+
+RDOC_OPTS         = [
+	'--quiet',
+	'--title', 'gchartrb API',
+	'--main',  'README.txt',
+	'--charset', 'utf-8',
+	'--inline-source',
+	'--tab-width', '2',
+	'--line-numbers',
+]
+
+Rake::RDocTask.new do |rdoc|
+    rdoc.rdoc_dir  = 'doc/'
+    rdoc.options   = RDOC_OPTS
+    rdoc.main      = "README.txt"
+    rdoc.rdoc_files.add [
+    	'README.txt',
+    	'History.txt',
+    	'lib/**/*.rb'
+    ]
+end
 # vim: syntax=Ruby

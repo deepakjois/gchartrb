@@ -91,9 +91,11 @@ lc.title_color = 'ff00ff'
 lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
 lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
 lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
-lc.max_value 10 # Setting max value for simple line chart
-puts "\nLine Chart with Horizontal range marker using extra params"
-puts lc.to_url({:chm => "r,000000,0,0.1,0.5"}) # Single black region as a horizontal range marker
+lc.max_value 10 # Setting max value for simple line chart 
+lc.range_marker :horizontal, :color => 'E5ECF9', :start_point => 0.1, :end_point => 0.5
+lc.range_marker :vertical, :color => 'a0bae9', :start_point => 0.1, :end_point => 0.5
+puts "\nLine Chart with range markers"
+puts lc.to_url
 
 # Bryan Error condition
 lcxy =  GoogleChart::LineChart.new('320x200', "Line XY Chart", true)

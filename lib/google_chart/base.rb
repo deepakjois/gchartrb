@@ -43,6 +43,7 @@ module GoogleChart
             @data   = []
             @colors = []
             @axis   = []
+            @range_markers = []
             self.chart_size    = chart_size
             self.chart_title   = chart_title
             self.data_encoding = :simple
@@ -64,9 +65,10 @@ module GoogleChart
             set_type
             set_colors
             set_fill_options
-            add_axis
+            add_axis unless @axis.empty?
             add_grid  
             add_data
+            add_range_markers unless @range_markers.empty?
             add_labels(@labels) if [:p, :p3].member?(self.chart_type)
             add_legend(@labels) if show_legend
             add_title  if chart_title.to_s.length > 0 
@@ -183,13 +185,32 @@ module GoogleChart
         # 
         # === Examples
         #     lc.grid :x_step => 5, :y_step => 5, :length_segment => 1, :length_blank => 0
-        #
-        
+        #        
         def grid(options={})
           @grid_str = "#{options[:x_step].to_f},#{options[:y_step].to_f}"
           if options[:length_segment] or options[:length_blank]
              @grid_str += ",#{options[:length_segment].to_f},#{options[:length_blank].to_f}"
           end
+        end
+        
+        # Defines a horizontal or vertical range marker. Applicable for line charts and vertical charts
+        #
+        # [+alignment+] can be <tt>:horizontal</tt> or <tt>:vertical</tt>
+        # [+options+] specifies the color, start point and end point
+        # 
+        # ==== Options
+        # [<tt>:color</tt>] RRGGBB hex value for the color of the range marker
+        # [<tt>:start_point</tt>]  position on the x-axis/y-axis at which the range starts where 0.00 is the left/bottom and 1.00 is the right/top
+        # [<tt>:end_point</tt>]  position on the x-axis/y-axis at which the range ends where 0.00 is the left/bottom and 1.00 is the right/top
+        #
+        # ==== Examples
+        #     lc.range_marker :horizontal, :color => 'E5ECF9', :start_point => 0.1, :end_point => 0.5
+        #     lc.range_marker :vertical, :color => 'a0bae9', :start_point => 0.1, :end_point => 0.5
+        def range_marker(alignment, options={}) 
+          raise "Invalid alignment specified" unless [:horizontal, :vertical].member?(alignment)
+          str = (alignment == :horizontal ) ? "r" : "R"
+          str += ",#{options[:color]},0,#{options[:start_point]},#{options[:end_point]}"
+          @range_markers << str 
         end    
         
         protected
@@ -301,6 +322,10 @@ module GoogleChart
         
         def add_grid
           params.merge!({ :chg => @grid_str }) if @grid_str
+        end
+        
+        def add_range_markers
+          params.merge!({:chm => @range_markers.join("|")})
         end
         
         def add_data

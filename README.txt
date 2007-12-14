@@ -36,12 +36,13 @@ The following features are pending :
 
 However, you can still make use of the API to insert arbitrary parameters
 
-    # Adding Extra params
-    lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
-    lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
-    lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
-    lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
-    puts lc.to_url({:chm => "r,000000,0,0.1,0.5"}) # Single black line as a horizontal marker by inserting arbitrary param
+    # Plotting a sparklines chart (using extra params)
+    sparklines = GoogleChart::LineChart.new('100x50', nil, false)
+    sparklines.data "Test", [4,3,2,4,6,8,10]
+    sparklines.show_legend = false
+    sparklines.axis :x, :labels => [] # Empty labels
+    sparklines.axis :y, :labels => [] # Empty labels
+    puts sparklines.to_url(:chxs => "0,000000,10,0,_|1,000000,10,0,_")
 
 == SYNOPSIS:
 

@@ -60,8 +60,6 @@ However, you can still make use of the API to insert arbitrary parameters
     # Line Chart
     lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
     lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
-    lc.show_legend = true 
-    lc.show_labels = false
     lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
     lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
     lc.axis :y, :range => [0,6], :color => 'ff00ff', :font_size => 16, :alignment => :center

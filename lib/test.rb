@@ -39,7 +39,7 @@ GoogleChart::BarChart.new('800x200', "Bar Chart", :vertical, false) do |bc|
 end
 
 # Line XY Chart
-line_chart = GoogleChart::LineChart.new('320x200', "Line XY Chart", true) do |lcxy|
+line_chart_xy = GoogleChart::LineChart.new('320x200', "Line XY Chart", true) do |lcxy|
   lcxy.data "Trend 1", [[1,1], [2,2], [3,3], [4,4]], '0000ff'
   lcxy.data "Trend 2", [[4,5], [2,2], [1,1], [3,4]], '00ff00'
   puts "\nLine XY Chart (inside a block)"
@@ -83,30 +83,27 @@ GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
   lc.axis :x, :range => [0,6], :color => '00ffff', :font_size => 16, :alignment => :center
   lc.grid :x_step => 100.0/6.0, :y_step => 100.0/6.0, :length_segment => 1, :length_blank => 0
   puts "\nLine Chart"
-  puts lc.to_url
 end
 
 # Solid fill
-line_chart.fill(:background, :solid, {:color => 'fff2cc'})
-line_chart.fill(:chart, :solid, {:color => 'ffcccc'})
+line_chart_xy.fill(:background, :solid, {:color => 'fff2cc'})
+line_chart_xy.fill(:chart, :solid, {:color => 'ffcccc'})
 puts "\nLine Chart with Solid Fill"
-puts line_chart.to_url
+puts line_chart_xy.to_url
 
 # Gradient fill
-line_chart.fill :background, :gradient, :angle => 0,  :color => [['76A4FB',1],['ffffff',0]]
-line_chart.fill :chart, :gradient, :angle => 0, :color => [['76A4FB',1],
-                                                   ['ffffff',0]]
+line_chart_xy.fill :background, :gradient, :angle => 0,  :color => [['76A4FB',1],['ffffff',0]]
+line_chart_xy.fill :chart, :gradient, :angle => 0, :color => [['76A4FB',1], ['ffffff',0]]
 puts "\nLine Chart with Gradient Fill"
-puts line_chart.to_url
+puts line_chart_xy.to_url
 
 # Stripes Fill
-line_chart.fill :chart, :stripes, :angle => 90, :color => [['76A4FB',0.2],
-                                                   ['ffffff',0.2]]
+line_chart_xy.fill :chart, :stripes, :angle => 90, :color => [['76A4FB',0.2], ['ffffff',0.2]]
 puts "\nLine Chart with Stripes Fill"
-puts line_chart.to_url
+puts line_chart_xy.to_url
 
-# Adding Extra params
-puts GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
+puts "\nLine Chart with range markers and shape markers"  
+GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
   lc.title_color = 'ff00ff'
   lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
   lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
@@ -114,7 +111,9 @@ puts GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
   lc.max_value 10 # Setting max value for simple line chart 
   lc.range_marker :horizontal, :color => 'E5ECF9', :start_point => 0.1, :end_point => 0.5
   lc.range_marker :vertical, :color => 'a0bae9', :start_point => 0.1, :end_point => 0.5
-  puts "\nLine Chart with range markers"
+  # Draw an arrow shape marker against lowest value in dataset
+  lc.shape_marker :arrow, :color => '000000', :data_set_index => 0, :data_point_index => 3, :pixel_size => 10   
+  puts lc.to_url
 end
 
 # Bryan Error condition

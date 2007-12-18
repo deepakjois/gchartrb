@@ -13,6 +13,17 @@ module GoogleChart
             end
         end
         
+        SHAPE_MARKERS = {:arrow => "a",
+                         :cross => "c",
+                         :diamond => "d",
+                         :circle => "o",
+                         :square => "s",
+                         :vline_segment => "v",
+                         :vline_full => "V",
+                         :hline_full => "h",
+                         :x => "x"
+                        }
+
         # Size of the chart in WIDTHxHEIGHT format
         attr_accessor :chart_size 
         
@@ -44,6 +55,7 @@ module GoogleChart
             @colors = []
             @axis   = []
             @range_markers = []
+            @shape_markers = []
             self.chart_size    = chart_size
             self.chart_title   = chart_title
             self.data_encoding = :simple
@@ -69,6 +81,7 @@ module GoogleChart
             add_grid  
             add_data
             add_range_markers unless @range_markers.empty?
+            add_shape_markers unless @shape_markers.empty?
             add_labels(@labels) if [:p, :p3].member?(self.chart_type)
             add_legend(@labels) if show_legend
             add_title  if chart_title.to_s.length > 0 
@@ -77,8 +90,6 @@ module GoogleChart
             query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s).gsub(/%20/,'+').gsub(/%7C/,'|')}" }.join('&')
             BASE_URL + query_string
         end
-        
-        alias_method :to_s, :to_url
         
         # Adds the data to the chart, according to the type of the graph being generated.
         #
@@ -213,7 +224,27 @@ module GoogleChart
           str = (alignment == :horizontal ) ? "r" : "R"
           str += ",#{options[:color]},0,#{options[:start_point]},#{options[:end_point]}"
           @range_markers << str 
-        end    
+        end
+
+        # Defines a shape marker. Applicable for line charts and scatter plots
+        #
+        # [+type+] can be <tt>:arrow</tt>, <tt>:cross</tt>, <tt>:diamond</tt>, <tt>:circle</tt>, <tt>:square</tt>, <tt>:vline_segment</tt>, <tt>:vline_full</tt>, <tt>:hline_full</tt>, <tt>:x</tt>
+        # [+options+] specifies the color, data set index, data point index and size in pixels
+        # 
+        # ==== Options
+        # [<tt>:color</tt>] RRGGBB hex value for the color of the range marker
+        # [<tt>:data_set_index</tt>]  the index of the line on which to draw the marker. This is 0 for the first data set, 1 for the second and so on.
+        # [<tt>:data_point_index</tt>]  is a floating point value that specifies on which data point of the data set the marker will be drawn. This is 0 for the first data point, 1 for the second and so on. Specify a fraction to interpolate a marker between two points.
+        # [<tt>:size</tt>] is the size of the marker in pixels.
+        #
+        # ==== Examples
+        #     lcxy.shape_marker :circle, :color => "000000", :data_set_index => 1, :data_point_index => 2, :pixel_size => 10
+        #     lcxy.shape_marker :cross, :color => "E5ECF9", :data_set_index => 0, :data_point_index => 0.5, :pixel_size => 10
+        def shape_marker(type, options={})
+          raise "Invalid shape marker type specified" unless SHAPE_MARKERS.has_key?(type)
+          shape_marker_str = "#{SHAPE_MARKERS[type]},#{options[:color]},#{options[:data_set_index]},#{options[:data_point_index]},#{options[:pixel_size]}"
+          @shape_markers << shape_marker_str
+        end
         
         protected
                 
@@ -328,6 +359,10 @@ module GoogleChart
         
         def add_range_markers
           params.merge!({:chm => @range_markers.join("|")})
+        end
+
+        def add_shape_markers
+          params.merge!({:chm => @shape_markers.join("|")})
         end
         
         def add_data

@@ -1,3 +1,7 @@
+== Unreleased
+* Added support for shape markers
+* Added support for block based idiomatic ruby syntax
+
 == 0.5.2 / 2007-12-14
 
 * Added support for title color via title_color attribute

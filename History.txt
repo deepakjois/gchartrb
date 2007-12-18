@@ -1,4 +1,4 @@
-== Unreleased
+== 0.5.3 / 2007-12-19
 * Added support for shape markers
 * Added support for block based idiomatic ruby syntax
 

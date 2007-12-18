@@ -12,7 +12,7 @@ module GoogleChart
                 @@complex_encoding[index_outer * 64 + index_inner] = outer + inner
             end
         end
-
+        
         # Size of the chart in WIDTHxHEIGHT format
         attr_accessor :chart_size 
         
@@ -77,6 +77,8 @@ module GoogleChart
             query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s).gsub(/%20/,'+').gsub(/%7C/,'|')}" }.join('&')
             BASE_URL + query_string
         end
+        
+        alias_method :to_s, :to_url
         
         # Adds the data to the chart, according to the type of the graph being generated.
         #

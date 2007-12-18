@@ -13,7 +13,7 @@ pc.data "Chocolate", 3, '66FF66'
 pc.data "Various Other Beverages", 15, '9AFF9A'
 pc.data "Various Other Foods", 9, 'C1FFC1'
 pc.data "Snacks",	5, 'CCFFCC'
-puts pc.to_url
+puts pc
 
 #  Line Chart
 x_axis_labels = (1..31).to_a.collect do |v|    

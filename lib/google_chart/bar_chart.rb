@@ -13,12 +13,13 @@ module GoogleChart
       # * +chart_title+ as a string
       # * +alignment+ as either <tt>:vertical</tt> or <tt>:horizontal</tt>
       # * +stacked+ should be +true+ if you want the bars to be stacked, false otherwise
-      def initialize(chart_size='300x200', chart_title=nil, alignment=:vertical, stacked=false)
+      def initialize(chart_size='300x200', chart_title=nil, alignment=:vertical, stacked=false) # :yield: self
           super(chart_size, chart_title)
           @alignment = alignment
           @stacked = stacked
           set_chart_type
           self.show_legend = true
+          yield self if block_given?
       end
       
       # Set the alignment to either <tt>:vertical</tt> or <tt>:horizontal</tt>

@@ -17,10 +17,11 @@ module GoogleChart
     class VennDiagram < Base
       
         # Initializes the Venn Diagram with a +chart_size+ (in WIDTHxHEIGHT format) and a +chart_title+
-        def initialize(chart_size='300x200', chart_title=nil)
+        def initialize(chart_size='300x200', chart_title=nil) # :yield: self
             super(chart_size, chart_title)
             self.chart_type = :v
-            @intersections = [] 
+            @intersections = []
+            yield self if block_given? 
         end
          
         def process_data          

@@ -25,9 +25,10 @@ module GoogleChart
     # * +chart_size+ in WIDTHxHEIGHT format
     # * +chart_title+ as a string
     # * +is_xy+ is <tt>false</tt> by default. Set it to <tt>true</tt> if you want to plot a Line XY chart
-    def initialize(chart_size='300x200', chart_title=nil, is_xy=false)
+    def initialize(chart_size='300x200', chart_title=nil, is_xy=false) # :yield: self
       super(chart_size, chart_title)
       self.is_xy = is_xy
+      yield self if block_given?
     end
 
     # Pass in <tt>true</tt> here to create a Line XY.

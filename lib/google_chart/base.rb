@@ -54,8 +54,7 @@ module GoogleChart
             @data   = []
             @colors = []
             @axis   = []
-            @range_markers = []
-            @shape_markers = []
+            @markers = []
             self.chart_size    = chart_size
             self.chart_title   = chart_title
             self.data_encoding = :simple
@@ -80,8 +79,7 @@ module GoogleChart
             add_axis unless @axis.empty?
             add_grid  
             add_data
-            add_range_markers unless @range_markers.empty?
-            add_shape_markers unless @shape_markers.empty?
+            add_markers unless @markers.empty?
             add_labels(@labels) if [:p, :p3].member?(self.chart_type)
             add_legend(@labels) if show_legend
             add_title  if chart_title.to_s.length > 0 
@@ -223,7 +221,7 @@ module GoogleChart
           raise "Invalid alignment specified" unless [:horizontal, :vertical].member?(alignment)
           str = (alignment == :horizontal ) ? "r" : "R"
           str += ",#{options[:color]},0,#{options[:start_point]},#{options[:end_point]}"
-          @range_markers << str 
+          @markers << str 
         end
 
         # Defines a shape marker. Applicable for line charts and scatter plots
@@ -243,7 +241,7 @@ module GoogleChart
         def shape_marker(type, options={})
           raise "Invalid shape marker type specified" unless SHAPE_MARKERS.has_key?(type)
           shape_marker_str = "#{SHAPE_MARKERS[type]},#{options[:color]},#{options[:data_set_index]},#{options[:data_point_index]},#{options[:pixel_size]}"
-          @shape_markers << shape_marker_str
+          @markers << shape_marker_str
         end
         
         protected
@@ -357,14 +355,10 @@ module GoogleChart
           params.merge!({ :chg => @grid_str }) if @grid_str
         end
         
-        def add_range_markers
-          params.merge!({:chm => @range_markers.join("|")})
+        def add_markers
+          params.merge!({:chm => @markers.join("|")})
         end
 
-        def add_shape_markers
-          params.merge!({:chm => @shape_markers.join("|")})
-        end
-        
         def add_data
             converted_data = process_data
             case data_encoding

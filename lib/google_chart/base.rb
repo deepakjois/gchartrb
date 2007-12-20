@@ -168,7 +168,7 @@ module GoogleChart
         # ==== Options
         # Not all the options are mandatory.
         # [<tt>:labels</tt>] An array containing the labels for the axis
-        # [<tt>:position</tt>] An Array containing the positions for the labels
+        # [<tt>:positions</tt>] An Array containing the positions for the labels
         # [<tt>:range</tt>] An array containing 2 elements, the start value and end value
         # 
         # axis styling options have to be specified as follows

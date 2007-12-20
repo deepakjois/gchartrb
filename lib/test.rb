@@ -73,7 +73,7 @@ GoogleChart::ScatterChart.new('320x200',"Scatter Chart") do |sc|
   puts sc.to_url
 end
 
-
+# Grid Fills
 GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
   lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
   lc.show_legend = true
@@ -103,6 +103,7 @@ line_chart_xy.fill :chart, :stripes, :angle => 90, :color => [['76A4FB',0.2], ['
 puts "\nLine Chart with Stripes Fill"
 puts line_chart_xy.to_url
 
+# Range and Shape Markers
 puts "\nLine Chart with range markers and shape markers"  
 GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
   lc.title_color = 'ff00ff'
@@ -125,4 +126,15 @@ lcxy.data 'C', [[0, 22], [1, 26], [2, 14], [3, 33], [4, 17],  [5, 7]], 'ff0000'
 lcxy.data 'D', [[0, 4],  [1, 39], [2, 0],  [3, 5],  [4, 11],  [5, 14]], 'cc00ff'
 puts "\nBryan Error Condition"
 puts lcxy.to_url
+
+# Stacked Chart error
+stacked = GoogleChart::BarChart.new('320x200', "Stacked Chart", :vertical, true)
+stacked.data_encoding = :text
+stacked.data "Trend 1", [60,80,20], '0000ff' 
+stacked.data "Trend 2", [50,5,100], 'ff0000'
+stacked.axis :y, :range => [0,120]
+puts "\nStacked Chart"
+puts stacked.to_url
+
+
 

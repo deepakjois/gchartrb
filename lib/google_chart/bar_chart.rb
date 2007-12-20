@@ -35,6 +35,21 @@ module GoogleChart
       end
 
       def process_data
+          if @stacked # Special handling of max value for stacked
+            unless @max_data # Unless max_data is explicitly set
+              @max_data = @data.inject([]) do |sum_arr, series| 
+                series.each_with_index do |v,i| 
+                  if sum_arr[i] == nil
+                    sum_arr[i] = v
+                  else
+                    sum_arr[i] += v
+                  end
+                end
+                sum_arr
+              end.max
+            end
+          end
+
           if @data.size > 1              
                 join_encoded_data(@data.collect { |series|
                   encode_data(series, max_data_value)

@@ -1,4 +1,11 @@
+== 0.5.4 / 2008-01-07
+
+* Fixed a bug related to data encoding in Stacked Charts
+* Fixed a bug in which title font and title font size values were being ignored
+* Fixed a bug where shape markers and range markers were overriding each other
+
 == 0.5.3 / 2007-12-19
+
 * Added support for shape markers
 * Added support for block based idiomatic ruby syntax
 

@@ -286,6 +286,7 @@ module GoogleChart
         def add_title
             params.merge!({:chtt => chart_title})
             params.merge!({:chts => title_color}) if title_color
+            params.merge!({:chts => "#{title_color},#{title_font_size}"}) if title_color and title_font_size
         end
         
         def add_axis          

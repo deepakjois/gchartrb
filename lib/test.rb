@@ -133,7 +133,9 @@ stacked.data_encoding = :text
 stacked.data "Trend 1", [60,80,20], '0000ff' 
 stacked.data "Trend 2", [50,5,100], 'ff0000'
 stacked.axis :y, :range => [0,120]
-puts "\nStacked Chart"
+stacked.title_color='ff0000'
+stacked.title_font_size=18
+puts "\nStacked Chart with colored title"
 puts stacked.to_url
 
 

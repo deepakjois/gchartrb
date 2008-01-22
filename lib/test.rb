@@ -138,5 +138,20 @@ stacked.title_font_size=18
 puts "\nStacked Chart with colored title"
 puts stacked.to_url
 
+# Encoding Error (Bar Chart)
+bc = GoogleChart::BarChart.new('800x350', nil, :vertical, true) do |chart|
+  chart.data_encoding = :extended
+      
+  chart.data "2^i", (0..8).to_a.collect{|i| 2**i}, "ff0000"
+  chart.data "2.1^i", (0..8).to_a.collect{|i| 2.1**i}, "00ff00"
+  chart.data "2.2^i", (0..8).to_a.collect{|i| 2.2**i}, "0000ff"
+  max = 2.2**8
+      
+  chart.show_legend = true
+  chart.axis :y, :range => [0,max], :font_size => 16, :alignment => :center
+  chart.axis :x, :labels => (0..8).to_a, :font_size => 16, :alignment => :center
+end
 
+puts "\nBar chart encoding error test"
+puts bc.to_url
 

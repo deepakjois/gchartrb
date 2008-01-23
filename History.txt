@@ -1,3 +1,7 @@
+== 0.5.5 / 2008-01-23
+
+* Fixed a bug related to multiple datasets using extended encoding
+
 == 0.5.4 / 2008-01-07
 
 * Fixed a bug related to data encoding in Stacked Charts

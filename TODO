@@ -1,11 +1,11 @@
 TODO List (Features)
 ====================
 * Line Styles
+* Customisable Width for bar charts
 * Fill Area
-* Handle Missing Values (?)
-* Download image
-* Friendly color values
-* Helper methods for standard chart types like Sparklines etc.
+* Download Image
+* Friendly Color Values
+* Easy calculations for Stuff that is needed
 
 TODO List (Other)
 =================

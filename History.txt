@@ -1,3 +1,9 @@
+== 0.6 / 2008-01-27
+
+* Added experimental support for undocumented Financial Line Chart (lfi)
+* Added line style support (thanks diomedes)
+* Added support for customisable width and spacing in bar charts
+
 == 0.5.5 / 2008-01-23
 
 * Fixed a bug related to multiple datasets using extended encoding

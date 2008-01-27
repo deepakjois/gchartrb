@@ -48,7 +48,6 @@ module GoogleChart
     def line_style(data_set_index, options={})
       @line_styles[data_set_index] = "#{options[:line_thickness]}"
       @line_styles[data_set_index] += ",#{options[:length_segment]},#{options[:length_blank]}" if options[:length_segment]
-      
     end
 
     def process_data

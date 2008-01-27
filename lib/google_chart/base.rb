@@ -362,8 +362,7 @@ module GoogleChart
 
     def add_line_styles
       0.upto(@line_styles.length - 1) { |i|
-        @line_styles[i] = DEFAULT_LINE_STYLE unless
-        @line_styles[i]
+        @line_styles[i] = DEFAULT_LINE_STYLE unless @line_styles[i]
       }
       params.merge!({:chls => @line_styles.join("|")})
     end

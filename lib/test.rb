@@ -155,3 +155,9 @@ end
 puts "\nBar chart encoding error test"
 puts bc.to_url
 
+# Financial Line Chart (Experimental)
+flc = GoogleChart::FinancialLineChart.new do |chart|
+  chart.data "", [3,10,20,37,40,25,68,75,89,99], "ff0000"
+end
+puts "\nFinancial Line Chart or Sparklines (EXPERIMENTAL)"
+puts flc.to_url

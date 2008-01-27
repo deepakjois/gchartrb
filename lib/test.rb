@@ -161,3 +161,15 @@ flc = GoogleChart::FinancialLineChart.new do |chart|
 end
 puts "\nFinancial Line Chart or Sparklines (EXPERIMENTAL)"
 puts flc.to_url
+
+# Line Style
+lc = GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
+  lc.data "Trend 1", [5,4,3,1,3,5], '0000ff'
+  lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
+  lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
+  lc.line_style 0, :length_segment => 3, :length_blank => 2, :line_thickness => 3
+  lc.line_style 1, :length_segment => 1, :length_blank => 2, :line_thickness => 1
+  lc.line_style 2, :length_segment => 2, :length_blank => 1, :line_thickness => 5
+end
+puts "\nLine Styles"
+puts lc.to_url

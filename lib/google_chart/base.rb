@@ -24,6 +24,8 @@ module GoogleChart
       :x => "x"
     }
 
+    DEFAULT_LINE_STYLE = '1'
+
     # Size of the chart in WIDTHxHEIGHT format
     attr_accessor :chart_size 
     
@@ -55,6 +57,7 @@ module GoogleChart
       @colors = []
       @axis   = []
       @markers = []
+      @line_styles = []
       self.chart_size    = chart_size
       self.chart_title   = chart_title
       self.data_encoding = :simple
@@ -79,6 +82,7 @@ module GoogleChart
       add_axis unless @axis.empty?
       add_grid  
       add_data
+      add_line_styles unless @line_styles.empty?
       add_markers unless @markers.empty?
       add_labels(@labels) if [:p, :p3].member?(self.chart_type)
       add_legend(@labels) if show_legend
@@ -354,6 +358,14 @@ module GoogleChart
     
     def add_grid
       params.merge!({ :chg => @grid_str }) if @grid_str
+    end
+
+    def add_line_styles
+      0.upto(@line_styles.length - 1) { |i|
+        @line_styles[i] = DEFAULT_LINE_STYLE unless
+        @line_styles[i]
+      }
+      params.merge!({:chls => @line_styles.join("|")})
     end
     
     def add_markers

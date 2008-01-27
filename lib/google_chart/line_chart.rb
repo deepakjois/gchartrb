@@ -28,6 +28,7 @@ module GoogleChart
     def initialize(chart_size='300x200', chart_title=nil, is_xy=false) # :yield: self
       super(chart_size, chart_title)
       self.is_xy = is_xy
+      @line_styles = []
       yield self if block_given?
     end
 
@@ -43,6 +44,13 @@ module GoogleChart
       end
     end
 
+    # Defines a line style. Applicable for line charts
+    def line_style(data_set_index, options={})
+      @line_styles[data_set_index] = "#{options[:line_thickness]}"
+      @line_styles[data_set_index] += ",#{options[:length_segment]},#{options[:length_blank]}" if options[:length_segment]
+      
+    end
+
     def process_data
       if self.is_xy or @data.size > 1
         if self.is_xy # XY Line graph data series
@@ -54,8 +62,8 @@ module GoogleChart
           join_encoded_data(encoded_data)
         else # Line graph multiple data series          
           join_encoded_data(@data.collect { |series|
-            encode_data(series, max_data_value)
-          })
+                              encode_data(series, max_data_value)
+                            })
         end
       else
         encode_data(@data.flatten, max_data_value)

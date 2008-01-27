@@ -34,6 +34,7 @@ GoogleChart::BarChart.new('800x200', "Bar Chart", :vertical, false) do |bc|
   bc.data "Trend 1", [5,4,3,1,3,5], '0000ff' 
   bc.data "Trend 2", [1,2,3,4,5,6], 'ff0000'
   bc.data "Trend 3", [6,5,4,4,5,6], '00ff00'
+  bc.width_spacing_options :bar_width => 5, :bar_spacing => 2, :group_spacing => 10
   puts "\nBar Chart"
   puts bc.to_url
 end

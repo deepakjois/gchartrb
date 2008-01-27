@@ -44,7 +44,14 @@ module GoogleChart
       end
     end
 
-    # Defines a line style. Applicable for line charts
+    # Defines a line style. Applicable for line charts.
+    # [+data_set_index+] Can be one of <tt>:background</tt> or <tt>:chart</tt> depending on the kind of fill requested
+    # [+options+] : Options for the style, specifying things like line thickness and lengths of the line segment and blank portions
+    #
+    # ==== Options
+    # * <tt>:line_thickness</tt> (mandatory) option which specifies the thickness of the line segment in pixels
+    # * <tt>:length_segment</tt>, which specifies the length of the line segment
+    # * <tt>:length_blank</tt>, which specifies the lenght of the blank segment
     def line_style(data_set_index, options={})
       @line_styles[data_set_index] = "#{options[:line_thickness]}"
       @line_styles[data_set_index] += ",#{options[:length_segment]},#{options[:length_blank]}" if options[:length_segment]

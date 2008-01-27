@@ -83,6 +83,7 @@ module GoogleChart
       add_grid  
       add_data
       add_line_styles unless @line_styles.empty?
+      set_bar_width_spacing_options if @bar_width_spacing_options
       add_markers unless @markers.empty?
       add_labels(@labels) if [:p, :p3].member?(self.chart_type)
       add_legend(@labels) if show_legend
@@ -365,6 +366,11 @@ module GoogleChart
         @line_styles[i] = DEFAULT_LINE_STYLE unless @line_styles[i]
       }
       params.merge!({:chls => @line_styles.join("|")})
+    end
+
+    def set_bar_width_spacing_options
+      puts "SETTING OPTIONS"
+      params.merge!({:chbh => @bar_width_spacing_options})
     end
     
     def add_markers

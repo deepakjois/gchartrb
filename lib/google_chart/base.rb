@@ -369,7 +369,6 @@ module GoogleChart
     end
 
     def set_bar_width_spacing_options
-      puts "SETTING OPTIONS"
       params.merge!({:chbh => @bar_width_spacing_options})
     end
     

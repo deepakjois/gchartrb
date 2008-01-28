@@ -29,7 +29,7 @@ module GoogleChart
     end
     
     # If you want the bar chart to be stacked, set the value to <tt>true</tt>, otherwise set the value to <tt>false</tt> to group it.
-    def stacked=(stacked)
+    def stacked=(value)
       @stacked = value
       set_chart_type
     end

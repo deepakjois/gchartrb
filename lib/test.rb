@@ -174,3 +174,6 @@ lc = GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
 end
 puts "\nLine Styles"
 puts lc.to_url
+
+puts "\nLine Styles (encoded URL)"
+puts lc.to_escaped_url

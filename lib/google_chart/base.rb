@@ -74,23 +74,28 @@ module GoogleChart
     #      lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
     #      puts lc.to_url({:chm => "000000,0,0.1,0.11"}) # Single black line as a horizontal marker        
     def to_url(extras={})
-      params.clear
-      set_size
-      set_type
-      set_colors
-      set_fill_options
-      add_axis unless @axis.empty?
-      add_grid  
-      add_data
-      add_line_styles unless @line_styles.empty?
-      set_bar_width_spacing_options if @bar_width_spacing_options
-      add_markers unless @markers.empty?
-      add_labels(@labels) if [:p, :p3].member?(self.chart_type)
-      add_legend(@labels) if show_legend
-      add_title  if chart_title.to_s.length > 0 
-      
+      prepare_params
       params.merge!(extras)
       query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s).gsub(/%20/,'+').gsub(/%7C/,'|')}" }.join('&')
+      BASE_URL + query_string
+    end
+
+    # Generates a fully encoded URL string that can be used to retrieve the graph image in PNG format.
+    # For less verbose URLs, use the <tt>to_url</tt> method. Use this only if you are doing further
+    # processing with the URLs, like passing the URL to a method for downloading the images
+    #
+    # Use this after assigning all the properties to the graph
+    # You can pass in additional params as a hash for features that may not have been implemented
+    # For e.g
+    #      lc = GoogleChart::LineChart.new('320x200', "Line Chart", false)
+    #      lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
+    #      lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
+    #      lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
+    #      puts lc.to_escaped_url({:chm => "000000,0,0.1,0.11"}) # Single black line as a horizontal marker            
+    def to_escaped_url(extras={})
+      prepare_params
+      params.merge!(extras)
+      query_string = params.map { |k,v| "#{k}=#{URI.escape(v.to_s)}" }.join('&')
       BASE_URL + query_string
     end
     
@@ -250,6 +255,23 @@ module GoogleChart
     end
     
     protected
+
+    def prepare_params
+      params.clear
+      set_size
+      set_type
+      set_colors
+      set_fill_options
+      add_axis unless @axis.empty?
+      add_grid  
+      add_data
+      add_line_styles unless @line_styles.empty?
+      set_bar_width_spacing_options if @bar_width_spacing_options
+      add_markers unless @markers.empty?
+      add_labels(@labels) if [:p, :p3].member?(self.chart_type)
+      add_legend(@labels) if show_legend
+      add_title  if chart_title.to_s.length > 0
+    end
     
     def process_fill_options(type, options)
       case type

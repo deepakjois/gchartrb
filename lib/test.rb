@@ -177,3 +177,26 @@ puts lc.to_url
 
 puts "\nLine Styles (encoded URL)"
 puts lc.to_escaped_url
+
+# Fill Area (Multiple Datasets)
+lc = GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
+  lc.show_legend = false
+  lc.data "Trend 1", [5,5,6,5,5], 'ff0000'
+  lc.data "Trend 2", [3,3,4,3,3], '00ff00'
+  lc.data "Trend 3", [1,1,2,1,1], '0000ff'
+  lc.data "Trend 4", [0,0,0,0,0], 'ffffff'
+  lc.fill_area '0000ff',2,3
+  lc.fill_area '00ff00',1,2
+  lc.fill_area 'ff0000',0,1
+end
+puts "\nFill Area (Multiple Datasets)"
+puts lc.to_url
+
+# Fill Area (Single Datasets)
+lc = GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
+  lc.show_legend = false
+  lc.data "Trend 1", [5,5,6,5,5], 'ff0000'
+  lc.fill_area 'cc6633', 0, 0
+end
+puts "\nFill Area (Single Dataset)"
+puts lc.to_url

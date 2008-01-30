@@ -253,6 +253,44 @@ module GoogleChart
       shape_marker_str = "#{SHAPE_MARKERS[type]},#{options[:color]},#{options[:data_set_index]},#{options[:data_point_index]},#{options[:pixel_size]}"
       @markers << shape_marker_str
     end
+
+    # Defines a Fill area. Applicable for line charts only
+    #
+    # [+color+] is the color of the fill area
+    # [+start_index+] is the index of the line at which the fill starts. This is 0 for the first data set, 1 for the second and so on.
+    # [+end_index+] is the index of the line at which the fill ends.
+    #
+    # ==== Examples
+    #     # Fill Area (Multiple Datasets)
+    #       lc = GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
+    #       lc.show_legend = false
+    #       lc.data "Trend 1", [5,5,6,5,5], 'ff0000'
+    #       lc.data "Trend 2", [3,3,4,3,3], '00ff00'
+    #       lc.data "Trend 3", [1,1,2,1,1], '0000ff'
+    #       lc.data "Trend 4", [0,0,0,0,0], 'ffffff'
+    #       lc.fill_area '0000ff',2,3
+    #       lc.fill_area '00ff00',1,2
+    #       lc.fill_area 'ff0000',0,1
+    #     end
+    #     puts "\nFill Area (Multiple Datasets)"
+    #      puts lc.to_url
+    #
+    #     # Fill Area (Single Dataset)
+    #     lc = GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
+    #       lc.show_legend = false
+    #       lc.data "Trend 1", [5,5,6,5,5], 'ff0000'
+    #       lc.fill_area 'cc6633', 0, 0
+    #     end
+    #     puts "\nFill Area (Single Dataset)"
+    #     puts lc.to_url
+    #
+    def fill_area(color, start_index, end_index)
+      if (start_index == 0 and end_index == 0)
+        @markers << "B,#{color},0,0,0"
+      else
+        @markers << "b,#{color},#{start_index},#{end_index},0"
+      end
+    end
     
     protected
 

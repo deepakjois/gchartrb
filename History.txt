@@ -1,3 +1,9 @@
+== 0.7 / 2008-02-04
+
+* Added fill area feature
+* Added to_escaped_url method for encoding the URLs properly
+* Fixed bug where wrong variable name was being used in method
+
 == 0.6 / 2008-01-27
 
 * Added experimental support for undocumented Financial Line Chart (lfi)

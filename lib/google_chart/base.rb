@@ -369,9 +369,9 @@ module GoogleChart
         when :y
           chxt << "y"
         when :top
-          chxt << "r"
-        when :right
           chxt << "t"
+        when :right
+          chxt << "r"
         end
         
         # Axis labels

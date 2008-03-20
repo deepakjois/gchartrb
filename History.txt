@@ -1,3 +1,8 @@
+== 0.8 / 2008-03-20
+
+* Fixed Rakefile to process URL correctly (Thanks Aaron Blohowiak)
+* Fixed Axis error due to typo in base.rb (Thanks Jack Nutting)
+
 == 0.7 / 2008-02-04
 
 * Added fill area feature

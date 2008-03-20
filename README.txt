@@ -1,6 +1,5 @@
-gchartrb
-    by Deepak Jois
-    http://code.google.com/p/gchartrb
+= gchartrb
+http://code.google.com/p/gchartrb
 
 == DESCRIPTION:
   

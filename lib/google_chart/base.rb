@@ -5,13 +5,9 @@ module GoogleChart
     BASE_URL = "http://chart.apis.google.com/chart?"
     
     SIMPLE_ENCODING = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
-    COMPLEX_ENCODING_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.'.split('');
-    @@complex_encoding = []
-    COMPLEX_ENCODING_ALPHABET.each_with_index do |outer,index_outer|
-      COMPLEX_ENCODING_ALPHABET.each_with_index do |inner, index_inner|
-        @@complex_encoding[index_outer * 64 + index_inner] = outer + inner
-      end
-    end
+    EXTENDED_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.'.split('');
+    EXTENDED_ENCODING = EXTENDED_CHARS.collect { |first| EXTENDED_CHARS.collect { |second| first + second } }.flatten
+
     
     SHAPE_MARKERS = {:arrow => "a",
       :cross => "c",
@@ -395,14 +391,10 @@ module GoogleChart
         if axis_opts[:color] or axis_opts[:font_size] or axis_opts[:alignment]
           if axis_opts[:alignment]
             alignment = case axis_opts[:alignment]
-                        when :center
-                          0
-                        when :left
-                          -1
-                        when :right
-                          1 
-                        else
-                          nil
+                        when :center then 0
+                        when :left then -1
+                        when :right then 1 
+                        else nil
                         end
           end
           chxs[idx] = "#{idx}," + [axis_opts[:color], axis_opts[:font_size], alignment].compact.join(",")
@@ -498,9 +490,9 @@ module GoogleChart
       max_value = values.max unless max_value
       values.collect { |v|
          if max_value == 0
-          @@complex_encoding[0]
+          EXTENDED_ENCODING[0]
         else
-          @@complex_encoding[(v * 4095/max_value).to_i]
+          EXTENDED_ENCODING[(v * 4095/max_value).to_i]
         end
       }.join('')
     end

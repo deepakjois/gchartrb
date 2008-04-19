@@ -48,7 +48,7 @@ module GoogleChart
       @bar_width_spacing_options = options_str
     end
 
-    def process_data
+    def process_data #:nodoc:
       if @stacked # Special handling of max value for stacked
         unless @max_data # Unless max_data is explicitly set
           @max_data = @data.inject([]) do |sum_arr, series| 

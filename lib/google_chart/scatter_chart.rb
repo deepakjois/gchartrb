@@ -18,8 +18,13 @@ module GoogleChart
       @point_sizes = []
       yield self if block_given?
     end
+        
+    # Specify the data point sizes of the Scatter chart (optional). The data point sizes are scaled with this data set.
+    def point_sizes(values)
+      @point_sizes = values
+    end
     
-    def process_data
+    def process_data #:nodoc:
       # Interleave X and Y co-ordinate data
       encoded_data = join_encoded_data([encode_data(x_data[0],max_x_value), encode_data(y_data[0],max_y_value)])
       # Add point sizes data if it exists
@@ -27,11 +32,6 @@ module GoogleChart
         encoded_data = join_encoded_data([encoded_data, encode_data(@point_sizes)])
       end
       return encoded_data
-    end
-    
-    # Specify the data point sizes of the Scatter chart (optional). The data point sizes are scaled with this data set.
-    def point_sizes(values)
-      @point_sizes = values
     end
     
   end

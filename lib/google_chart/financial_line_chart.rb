@@ -22,7 +22,7 @@ module GoogleChart
       yield self if block_given?
     end
 
-    def process_data
+    def process_data #:nodoc:
       join_encoded_data(@data.collect { |series|
             encode_data(series, max_data_value)
           })

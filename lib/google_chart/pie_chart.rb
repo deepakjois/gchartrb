@@ -26,7 +26,7 @@ module GoogleChart
             end
         end
 
-        def process_data
+        def process_data #:nodoc:
             encode_data(@data, max_data_value)
         end
     end

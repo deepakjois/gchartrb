@@ -23,14 +23,14 @@ module GoogleChart
             @intersections = []
             yield self if block_given? 
         end
-         
-        def process_data          
-          encode_data(@data + @intersections)
-        end
-         
+                  
         # Specify the intersections of the circles in the Venn Diagram. See the Rdoc for class for sample
         def intersections(*values)            
           @intersections = values
         end
+        
+        def process_data #:nodoc:
+          encode_data(@data + @intersections)
+        end        
     end
 end

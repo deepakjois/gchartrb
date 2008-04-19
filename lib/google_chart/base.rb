@@ -294,7 +294,7 @@ module GoogleChart
     
     protected
 
-    def prepare_params
+    def prepare_params #:nodoc:
       params.clear
       set_size
       set_type
@@ -311,7 +311,7 @@ module GoogleChart
       add_title  if chart_title.to_s.length > 0
     end
     
-    def process_fill_options(type, options)
+    def process_fill_options(type, options) #:nodoc:
       case type
       when :solid
         "s,#{options[:color]}"
@@ -323,38 +323,38 @@ module GoogleChart
       
     end
     
-    def set_type
+    def set_type #:nodoc:
       params.merge!({:cht => chart_type})
     end
     
-    def set_size
+    def set_size #:nodoc:
       params.merge!({:chs => chart_size})
     end
     
-    def set_colors
+    def set_colors #:nodoc:
       params.merge!({:chco => @colors.collect{|c| c.downcase}.join(",")  }) if @colors.size > 0
     end
     
-    def set_fill_options
+    def set_fill_options #:nodoc:
       fill_opt = [@background_fill, @chart_fill].compact.join("|")
       params.merge!({:chf => fill_opt}) if fill_opt.length > 0
     end
     
-    def add_labels(labels)
+    def add_labels(labels) #:nodoc:
       params.merge!({:chl => labels.collect{|l| l.to_s}.join("|") }) if self.show_labels 
     end                
     
-    def add_legend(labels)
+    def add_legend(labels) #:nodoc:
       params.merge!({:chdl => labels.collect{ |l| l.to_s}.join("|")})
     end
     
-    def add_title
+    def add_title #:nodoc:
       params.merge!({:chtt => chart_title})
       params.merge!({:chts => title_color}) if title_color
       params.merge!({:chts => "#{title_color},#{title_font_size}"}) if title_color and title_font_size
     end
     
-    def add_axis          
+    def add_axis #:nodoc:
       chxt = []
       chxl = []
       chxp = []
@@ -417,26 +417,26 @@ module GoogleChart
       params.merge!({ :chxs => chxs.compact.join("|") })  unless chxs.compact.empty?
     end
     
-    def add_grid
+    def add_grid #:nodoc:
       params.merge!({ :chg => @grid_str }) if @grid_str
     end
 
-    def add_line_styles
+    def add_line_styles #:nodoc:
       0.upto(@line_styles.length - 1) { |i|
         @line_styles[i] = DEFAULT_LINE_STYLE unless @line_styles[i]
       }
       params.merge!({:chls => @line_styles.join("|")})
     end
 
-    def set_bar_width_spacing_options
+    def set_bar_width_spacing_options #:nodoc:
       params.merge!({:chbh => @bar_width_spacing_options})
     end
     
-    def add_markers
+    def add_markers #:nodoc:
       params.merge!({:chm => @markers.join("|")})
     end
 
-    def add_data
+    def add_data #:nodoc:
       converted_data = process_data
       case data_encoding
       when :simple
@@ -451,7 +451,7 @@ module GoogleChart
       params.merge!({:chd => converted_data})
     end
     
-    def encode_data(values, max_value=nil)
+    def encode_data(values, max_value=nil) #:nodoc:
       case data_encoding
       when :simple
         simple_encode(values, max_value)
@@ -464,7 +464,7 @@ module GoogleChart
       end
     end
     
-    def simple_encode(values, max_value=nil)
+    def simple_encode(values, max_value=nil) #:nodoc:
       alphabet_length = 61
       max_value = values.max unless max_value
 
@@ -483,7 +483,7 @@ module GoogleChart
       return chart_data.join('')
     end
     
-    def text_encode(values, max_value=nil)
+    def text_encode(values, max_value=nil) #:nodoc:
       max_value = values.max unless max_value
       values.inject("") { |sum, v|
          if max_value == 0
@@ -494,7 +494,7 @@ module GoogleChart
       }.chomp(",")
     end
     
-    def extended_encode(values, max_value)
+    def extended_encode(values, max_value) #:nodoc:
       max_value = values.max unless max_value
       values.collect { |v|
          if max_value == 0
@@ -505,29 +505,29 @@ module GoogleChart
       }.join('')
     end
     
-    def join_encoded_data(encoded_data)
+    def join_encoded_data(encoded_data) #:nodoc:
       encoded_data.join((self.data_encoding == :simple or self.data_encoding == :extended) ? "," : "|")
     end
     
-    def max_data_value
+    def max_data_value #:nodoc:
       @max_data or @data.flatten.max
     end
     
-    def max_x_value
+    def max_x_value #:nodoc:
       @max_x or x_data.flatten.max
     end
 
-    def max_y_value
+    def max_y_value #:nodoc:
       @max_y or y_data.flatten.max
     end
 
-    def x_data
+    def x_data #:nodoc:
       @data.collect do |series|
         series.collect { |val| val.first }
       end
     end
 
-    def y_data
+    def y_data #:nodoc:
       @data.collect do |series|
         series.collect { |val| val.last }
       end

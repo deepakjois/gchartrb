@@ -57,7 +57,7 @@ module GoogleChart
       @line_styles[data_set_index] += ",#{options[:length_segment]},#{options[:length_blank]}" if options[:length_segment]
     end
 
-    def process_data
+    def process_data #:nodoc:
       if self.is_xy or @data.size > 1
         if self.is_xy # XY Line graph data series
           encoded_data = []

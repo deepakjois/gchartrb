@@ -30,7 +30,7 @@ module GoogleChart
     end
     
     # Specify the data point sizes of the Scatter chart (optional). The data point sizes are scaled with this data set.
-    def point_sizes(values)            
+    def point_sizes(values)
       @point_sizes = values
     end
     

@@ -1,4 +1,4 @@
-require 'google_chart'
+require 'gchartrb'
 
 # Some examples from http://24ways.org/2007/tracking-christmas-cheer-with-google-charts
 

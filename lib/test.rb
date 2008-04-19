@@ -1,4 +1,4 @@
-require 'google_chart'
+require 'gchartrb'
 
 # Pie Chart
 GoogleChart::PieChart.new('320x200', "Pie Chart",false) do |pc|

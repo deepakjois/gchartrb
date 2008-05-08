@@ -360,14 +360,10 @@ module GoogleChart
       @axis.each_with_index do |axis, idx|
         # Find axis type
         case axis.first
-        when :x
-          chxt << "x"
-        when :y
-          chxt << "y"
-        when :top
-          chxt << "t"
-        when :right
-          chxt << "r"
+        when :x then chxt << "x"
+        when :y then chxt << "y"
+        when :top then chxt << "t"
+        when :right then chxt << "r"
         end
         
         # Axis labels

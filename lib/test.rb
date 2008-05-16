@@ -1,5 +1,7 @@
 require 'gchartrb'
 
+# BIG WARNING: Needs to be rewritten. This syntax refers to old version
+
 # Pie Chart
 GoogleChart::PieChart.new('320x200', "Pie Chart",false) do |pc|
   pc.data "Apples", 40
@@ -8,11 +10,11 @@ GoogleChart::PieChart.new('320x200', "Pie Chart",false) do |pc|
   pc.data "Orange", 60
   puts "\nPie Chart"
   puts pc.to_url
-  
+
   # Pie Chart with no labels
   pc.show_labels = false
   puts "\nPie Chart (with no labels)"
-  puts pc.to_url  
+  puts pc.to_url
 end
 
 
@@ -31,7 +33,7 @@ end
 
 # Bar Chart
 GoogleChart::BarChart.new('800x200', "Bar Chart", :vertical, false) do |bc|
-  bc.data "Trend 1", [5,4,3,1,3,5], '0000ff' 
+  bc.data "Trend 1", [5,4,3,1,3,5], '0000ff'
   bc.data "Trend 2", [1,2,3,4,5,6], 'ff0000'
   bc.data "Trend 3", [6,5,4,4,5,6], '00ff00'
   bc.width_spacing_options :bar_width => 5, :bar_spacing => 2, :group_spacing => 10
@@ -44,7 +46,7 @@ line_chart_xy = GoogleChart::LineChart.new('320x200', "Line XY Chart", true) do 
   lcxy.data "Trend 1", [[1,1], [2,2], [3,3], [4,4]], '0000ff'
   lcxy.data "Trend 2", [[4,5], [2,2], [1,1], [3,4]], '00ff00'
   puts "\nLine XY Chart (inside a block)"
-  puts lcxy.to_url   
+  puts lcxy.to_url
 end
 
 # Venn Diagram
@@ -105,17 +107,17 @@ puts "\nLine Chart with Stripes Fill"
 puts line_chart_xy.to_url
 
 # Range and Shape Markers
-puts "\nLine Chart with range markers and shape markers"  
+puts "\nLine Chart with range markers and shape markers"
 GoogleChart::LineChart.new('320x200', "Line Chart", false) do |lc|
   lc.title_color = 'ff00ff'
   lc.data "Trend 1", [5,4,3,1,3,5,6], '0000ff'
   lc.data "Trend 2", [1,2,3,4,5,6], '00ff00'
   lc.data "Trend 3", [6,5,4,3,2,1], 'ff0000'
-  lc.max_value 10 # Setting max value for simple line chart 
+  lc.max_value 10 # Setting max value for simple line chart
   lc.range_marker :horizontal, :color => 'E5ECF9', :start_point => 0.1, :end_point => 0.5
   lc.range_marker :vertical, :color => 'a0bae9', :start_point => 0.1, :end_point => 0.5
   # Draw an arrow shape marker against lowest value in dataset
-  lc.shape_marker :arrow, :color => '000000', :data_set_index => 0, :data_point_index => 3, :pixel_size => 10   
+  lc.shape_marker :arrow, :color => '000000', :data_set_index => 0, :data_point_index => 3, :pixel_size => 10
   puts lc.to_url
 end
 
@@ -131,7 +133,7 @@ puts lcxy.to_url
 # Stacked Chart error
 stacked = GoogleChart::BarChart.new('320x200', "Stacked Chart", :vertical, true)
 stacked.data_encoding = :text
-stacked.data "Trend 1", [60,80,20], '0000ff' 
+stacked.data "Trend 1", [60,80,20], '0000ff'
 stacked.data "Trend 2", [50,5,100], 'ff0000'
 stacked.axis :y, :range => [0,120]
 stacked.title_color='ff0000'
@@ -142,12 +144,12 @@ puts stacked.to_url
 # Encoding Error (Bar Chart)
 bc = GoogleChart::BarChart.new('800x350', nil, :vertical, true) do |chart|
   chart.data_encoding = :extended
-      
+
   chart.data "2^i", (0..8).to_a.collect{|i| 2**i}, "ff0000"
   chart.data "2.1^i", (0..8).to_a.collect{|i| 2.1**i}, "00ff00"
   chart.data "2.2^i", (0..8).to_a.collect{|i| 2.2**i}, "0000ff"
   max = 2.2**8
-      
+
   chart.show_legend = true
   chart.axis :y, :range => [0,max], :font_size => 16, :alignment => :center
   chart.axis :x, :labels => (0..8).to_a, :font_size => 16, :alignment => :center

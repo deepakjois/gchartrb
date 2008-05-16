@@ -1,36 +1,41 @@
-require File.dirname(__FILE__) + '/base'
 module GoogleChart
-    # Generates a Venn Diagram.
-    #        
-    # Supply three vd.data statements of label, size, color for circles A, B, C. Then, intersections with four values:
-    # * the first value specifies the area of A intersecting B
-    # * the second value specifies the area of B intersecting C
-    # * the third value specifies the area of C intersecting A
-    # * the fourth value specifies the area of A intersecting B intersecting C
-    #
-    #      vd = GoogleChart::VennDiagram.new("320x200", 'Venn Diagram') 
-    #      vd.data "Blue", 100, '0000ff'
-    #      vd.data "Green", 80, '00ff00'
-    #      vd.data "Red",   60, 'ff0000'
-    #      vd.intersections 30,30,30,10
-    #      puts vd.to_url  
+
     class VennDiagram < Base
-      
-        # Initializes the Venn Diagram with a +chart_size+ (in WIDTHxHEIGHT format) and a +chart_title+
-        def initialize(chart_size='300x200', chart_title=nil) # :yield: self
-            super(chart_size, chart_title)
-            self.chart_type = :v
-            @intersections = []
-            yield self if block_given? 
+      include Legend
+      include Fills
+      include Color
+      include DataArray
+
+      data_type :numeric
+
+        def initialize(options={})
+          @chart_type="v"
+          @show_legend = false
+          @intersections = []
+          super(options)
         end
-                  
+
         # Specify the intersections of the circles in the Venn Diagram. See the Rdoc for class for sample
-        def intersections(*values)            
+        def intersections(*values)
+          raise ArgumentError.new("Please intialise the data first before adding intersections") if @data.empty?
+          raise ArgumentError.new("You can have at most three intersections") if values.size > 3
+          raise ArgumentError.new("You cannot have more intersections than data points") if values.size > @data.size
+          raise ArgumentError.new("all values must be integers") unless values.all? { |v| v.is_a?(Integer) }
           @intersections = values
         end
-        
-        def process_data #:nodoc:
-          encode_data(@data + @intersections)
-        end        
+
+        def data(legend, data, color = nil)
+          raise ArgumentError.new("data should be an integer value") unless data.is_a?(Integer)
+          raise ArgumentError.new("you can only insert upto 3 data points") if @data.size == 3
+          @data << data
+          legend(legend)
+          color(color)
+        end
+        private
+        def encode_data
+          @data.push(0) until @data.size == 3
+          @data = @data + @intersections unless @intersections.empty?
+          super
+        end
     end
 end

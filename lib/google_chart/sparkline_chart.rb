@@ -1,5 +1,5 @@
 module GoogleChart
-  class LineChart < Base
+  class SparklineChart < Base
     include Legend
     include Color
     include DataArray
@@ -10,8 +10,8 @@ module GoogleChart
 
     data_type :numeric_array
 
-    def initialize(options={})
-      @chart_type = "lc"
+    def initialize(options={}) #:nodoc:
+      @chart_type = "ls"
       @show_legend = false
       super(options)
     end

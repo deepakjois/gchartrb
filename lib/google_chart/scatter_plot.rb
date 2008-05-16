@@ -1,5 +1,5 @@
 module GoogleChart
-  class LineChart < Base
+  class ScatterPlot < Base
     include Legend
     include Color
     include DataArray
@@ -8,10 +8,10 @@ module GoogleChart
     include Grid
     include Markers
 
-    data_type :numeric_array
+    data_type :numeric_2d_array
 
     def initialize(options={})
-      @chart_type = "lc"
+      @chart_type = "s"
       @show_legend = false
       super(options)
     end

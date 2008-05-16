@@ -1,7 +1,12 @@
 TODO List (Features)
 ====================
-* Update doc to indicate what function is applicable to which type of chart
-* Read through doc,do a code review(!) and make list of updated features
+* Line Styles and Fill Areas
+* Googleometer and Map Charts
+* Data Scaling for text encoding
+* Add validations for height and width values (copy specs and implementation from GChart)
+* Documentation!!!
+* Change all examples and put them in different folders
 * Download Image
 * Friendly Color Values
 * Easy calculations for Stuff that is needed
+* Cleanup and DRY validations

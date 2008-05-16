@@ -1,10 +1,13 @@
 require 'gchartrb'
 
+# BIG WARNING: Needs to be rewritten. This syntax refers to old version
+
+
 # Some examples from http://24ways.org/2007/tracking-christmas-cheer-with-google-charts
 
 # Pie Chart
 pc = GoogleChart::PieChart.new("600x300", "Food and Drinks Consumed Christmas 2007")
-pc.data "Egg nog", 10, '00AF33' 
+pc.data "Egg nog", 10, '00AF33'
 pc.data "Christmas Ham", 20, '4BB74C'
 pc.data "Milk (not including egg nog)",	8, 'EE2C2C'
 pc.data "Cookies", 25, 'CC3232'
@@ -16,19 +19,19 @@ pc.data "Snacks",	5, 'CCFFCC'
 puts pc
 
 #  Line Chart
-x_axis_labels = (1..31).to_a.collect do |v|    
+x_axis_labels = (1..31).to_a.collect do |v|
   if [1,6,25,26,31].member?(v)
     if v == 1
       "Dec 1st"
     elsif v == 31
       "Dec 31st"
-    elsif v 
-      "#{v}th" 
-    end    
+    elsif v
+      "#{v}th"
+    end
   else
     nil
-  end  
-end 
+  end
+end
 
 y_axis_labels = (0..10).to_a.collect do |v|
   val = 10 * v

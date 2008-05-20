@@ -19,7 +19,7 @@ module GoogleChart
       @orientation = :vertical
       @grouping    = :grouped
       set_chart_type
-      @show_legend = false
+      @show_legend = true
       super(options)
     end
 

@@ -21,8 +21,11 @@ describe GoogleChart::LineChart do
   end
 
   it "should contain a simple set of query parameters after adding data" do
+     @line_chart.title = "Chart"
      @line_chart.data("Series 1", [1,1,1])
+
      @line_chart.query_params[:cht].should == "lc"
+     @line_chart.query_params[:chtt].should == "Chart"
      @line_chart.query_params[:chd].should == "s:999"
      @line_chart.query_params[:chs].should == "320x200"
 

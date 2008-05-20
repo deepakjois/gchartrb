@@ -32,12 +32,12 @@ describe GoogleChart::Fills do
         f.type  = :background
         f.color = "00ff00"
       end
-      @chart.query_params[:chf].should be_eql("s,bg,00ff00")
+      @chart.query_params[:chf].should be_eql("bg,s,00ff00")
     end
 
     it "should be able to initialise the properties via a hash" do
       @chart.fill(:solid, :type => :background, :color => "00ff00")
-      @chart.query_params[:chf].should be_eql("s,bg,00ff00")
+      @chart.query_params[:chf].should be_eql("bg,s,00ff00")
     end
 
     it "raises error on invalid type" do
@@ -62,12 +62,12 @@ describe GoogleChart::Fills do
         f.colors  = ["ff00ff", "00ffff"]
         f.offsets = [0,0.75]
       end
-      @chart.query_params[:chf].should be_eql("lg,bg,45,ff00ff,0,00ffff,0.75")
+      @chart.query_params[:chf].should be_eql("bg,lg,45,ff00ff,0,00ffff,0.75")
     end
 
     it "should be able to initialise the properties via a hash" do
       @chart.fill(:gradient, @valid_gradient_values)
-      @chart.query_params[:chf].should be_eql("lg,bg,45,ff00ff,0,00ffff,0.75")
+      @chart.query_params[:chf].should be_eql("bg,lg,45,ff00ff,0,00ffff,0.75")
     end
 
     it "should raise an error for invalid value of angle" do
@@ -97,12 +97,12 @@ describe GoogleChart::Fills do
         f.colors = ["ff00ff", "00ffff"]
         f.widths = [0.25,0.75]
       end
-      @chart.query_params[:chf].should be_eql("ls,bg,45,ff00ff,0.25,00ffff,0.75")
+      @chart.query_params[:chf].should be_eql("bg,ls,45,ff00ff,0.25,00ffff,0.75")
     end
 
     it "should be able to initialise the properties via a hash" do
       @chart.fill(:stripes, @valid_stripe_values)
-      @chart.query_params[:chf].should be_eql("ls,bg,45,ff00ff,0.25,00ffff,0.75")
+      @chart.query_params[:chf].should be_eql("bg,ls,45,ff00ff,0.25,00ffff,0.75")
     end
 
     it "should raise an error on invalid value for type" do

@@ -89,6 +89,8 @@ module GoogleChart
     def add_defaults
       @params[:cht] = chart_type
       @params[:chs] = size
+      @params[:chtt] = title if title
+      @params[:chts] = [title_color, title_font_size].compact.join(",")
     end
 
     def add_data

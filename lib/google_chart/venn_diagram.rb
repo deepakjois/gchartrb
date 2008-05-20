@@ -18,8 +18,8 @@ module GoogleChart
         # Specify the intersections of the circles in the Venn Diagram. See the Rdoc for class for sample
         def intersections(*values)
           raise ArgumentError.new("Please intialise the data first before adding intersections") if @data.empty?
-          raise ArgumentError.new("You can have at most three intersections") if values.size > 3
-          raise ArgumentError.new("You cannot have more intersections than data points") if values.size > @data.size
+          raise ArgumentError.new("You can have at most three intersections") if values.size > 4
+          raise ArgumentError.new("You cannot have more intersections than data points") if values.size > (@data.size + 1)
           raise ArgumentError.new("all values must be integers") unless values.all? { |v| v.is_a?(Integer) }
           @intersections = values
         end

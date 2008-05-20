@@ -84,13 +84,13 @@ module GoogleChart
     def parse_fill(f)
       case f
       when SolidFill
-        "s,#{map_type(f.type)},#{f.color}"
+        "#{map_type(f.type)},s,#{f.color}"
       when GradientFill
         colors_offsets = f.colors.zip(f.offsets).collect { |item| item.join(",") }.join(",")
-        "lg,#{map_type(f.type)},#{f.angle},#{colors_offsets}"
+        "#{map_type(f.type)},lg,#{f.angle},#{colors_offsets}"
       when StripesFill
         colors_widths = f.colors.zip(f.widths).collect { |item| item.join(",") }.join(",")
-        "ls,#{map_type(f.type)},#{f.angle},#{colors_widths}"
+        "#{map_type(f.type)},ls,#{f.angle},#{colors_widths}"
       end
     end
 

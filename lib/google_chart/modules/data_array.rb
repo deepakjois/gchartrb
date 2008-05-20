@@ -37,7 +37,7 @@ module GoogleChart
 
     module ClassMethods
       def data_type(type) #:nodoc:
-        raise ArgumentError.new("Invalid data type, must be either :numeric, :numeric_arry or :numeric_2d_array") unless [:numeric, :numeric_array, :numeric_2d_array].include?(type)
+        raise ArgumentError.new("Invalid data type, must be either :numeric, :numeric_array or :numeric_2d_array") unless [:numeric, :numeric_array, :numeric_2d_array].include?(type)
         # This is the *instance variable* of the *singleton class* ;)
         @data_type = type
 

@@ -34,7 +34,7 @@ module GoogleChart
       values = [:shape, :color, :data_set, :data_point, :size, :priority].collect { |m| marker.send(m) }.compact
       values[0] = SHAPES[marker.shape]
       values[0] += (marker.text.gsub(" ","+")) if marker.shape == :text
-      values[5] = PRIORITY[marker.priority] if values[4]
+      values[5] = PRIORITY[marker.priority] if values[5]
       @markers << values.join(",")
     end
 

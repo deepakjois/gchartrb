@@ -20,7 +20,7 @@ module GoogleChart
    PRIORITY = { :high => 1, :low => -1 }
 
     RangeMarker = Struct.new("RangeMarker", :orientation, :color, :start, :end)
-    ShapeMarker = Struct.new("ShapeMarker", :shape, :color, :data_set, :data_point, :size, :priority)
+    ShapeMarker = Struct.new("ShapeMarker", :shape, :color, :data_set, :data_point, :size, :priority, :text)
 
     def shape_marker(shape, options={})
       @markers ||= []
@@ -33,6 +33,7 @@ module GoogleChart
       validate_shape_marker(marker)
       values = [:shape, :color, :data_set, :data_point, :size, :priority].collect { |m| marker.send(m) }.compact
       values[0] = SHAPES[marker.shape]
+      values[0] += (marker.text.gsub(" ","+")) if marker.shape == :text
       values[5] = PRIORITY[marker.priority] if values[4]
       @markers << values.join(",")
     end
@@ -80,6 +81,8 @@ module GoogleChart
                                                                                                  PRIORITY.keys.include?(marker.priority)
 
       raise ArgumentError.new("Size must be an integer") unless marker.size.is_a?(Integer)
+      raise ArgumentError.new("Text should not be specified if marker is not text") if marker.text and marker.shape != :text
+      raise ArgumentError.new("Text should be specified (using :text) if marker is text") if marker.text == nil and marker.shape == :text
     end
   end
 end

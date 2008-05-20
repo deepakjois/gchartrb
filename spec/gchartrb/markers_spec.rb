@@ -84,6 +84,20 @@ describe GoogleChart::Markers do
       params[:size] = "hi"
       lambda { @chart.shape_marker(:arrow,params) }.should raise_error(ArgumentError)
     end
+
+    it "should accept a text option for a text marker" do
+      @chart.shape_marker(:text, @valid_shape_marker.merge(:text => "Hi There"))
+    end
+
+    it "should not accept a text option for a text marker" do
+      lambda { @chart.shape_marker(:arrow, @valid_shape_marker.merge(:text => "Hi There")) }.should raise_error(ArgumentError)
+    end
+
+    it "should format the text marker correctly" do
+      @chart.shape_marker(:text, @valid_shape_marker.merge(:text => "Hi There"))
+      @chart.query_params[:chm].should == "tHi+There,ff00ff,0,1,4,-1"
+    end
+
   end
 
   describe ".range_marker" do

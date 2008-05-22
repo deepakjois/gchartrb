@@ -54,6 +54,7 @@ GoogleChart::BarChart.new do |bc|
   bc.bar_spacing = 2
   bc.group_spacing = 10
 
+  bc.shape_marker :text, :text => "Test", :color => "000000" ,:data_set => 0, :data_point => 1, :size => 14
   puts "\nBar Chart"
   puts bc.to_url
 end
@@ -97,13 +98,11 @@ GoogleChart::ScatterPlot.new do |sc|
   puts sc.to_url
 end
 
-
 # Solid fill
 line_chart_xy.fill :solid, :type => :background, :color => 'fff2cc'
 line_chart_xy.fill(:solid, :type => :chart ,:color => 'ffcccc')
 puts "\nLine Chart with Solid Fill"
 puts line_chart_xy.to_url
-
 
 # Gradient Fill
 line_chart_xy.fill :gradient, :type => :background, :angle => 0,  :colors => ['76A4FB','ffffff'], :offsets => [1,0]
@@ -111,12 +110,10 @@ line_chart_xy.fill :gradient, :type => :chart, :angle => 0, :colors => ['76A4FB'
 puts "\nLine Chart with Gradient Fill"
 puts line_chart_xy.to_url
 
-
 # Stripes Fill
 line_chart_xy.fill :stripes, :type => :chart, :angle => 90, :colors => ['76A4FB','ffffff'], :widths => [0.2,0.2]
 puts "\nLine Chart with Stripes Fill"
 puts line_chart_xy.to_url
-
 
 # Range and Shape Markers
 puts "\nLine Chart with range markers and shape markers"
@@ -149,7 +146,6 @@ lcxy.data 'D', [[0, 4],  [1, 39], [2, 0],  [3, 5],  [4, 11],  [5, 14]], 'cc00ff'
 puts "\nBryan Error Condition"
 puts lcxy.to_url
 
-
 # Stacked Chart error
 stacked = GoogleChart::BarChart.new
 
@@ -165,7 +161,6 @@ stacked.data "Trend 2", [50,5,100], 'ff0000'
 stacked.axis :left, :range => 0..120
 puts "\nStacked Chart with colored title"
 puts stacked.to_url
-
 
 # Encoding Error (Bar Chart)
 bc = GoogleChart::BarChart.new do |chart|

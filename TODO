@@ -1,11 +1,9 @@
-TODO List (Features)
+TODO List
 ====================
+* Documentation!
 * Line Styles and Fill Areas
 * Googleometer and Map Charts
 * Data Scaling for text encoding
-* Add validations for height and width values (copy specs and implementation from GChart)
-* Documentation!!!
-* Change all examples and put them in different folders
 * Download Image
 * Friendly Color Values
 * Easy calculations for Stuff that is needed

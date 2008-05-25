@@ -4,6 +4,7 @@ Manifest.txt
 README.txt
 Rakefile
 TODO
+gchartrb.gemspec
 lib/core_ext.rb
 lib/example.rb
 lib/gchartrb.rb

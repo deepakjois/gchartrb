@@ -2,7 +2,7 @@
 http://code.google.com/p/gchartrb
 
 == DESCRIPTION:
-  
+
 gchartrb is a Ruby wrapper around the Google Chart API, located at http://code.google.com/apis/chart/ 
 
 Visit http://code.google.com/p/gchartrb to track development regarding gchartrb.
@@ -17,21 +17,23 @@ Visit http://code.google.com/p/gchartrb to track development regarding gchartrb.
 
     sudo gem install gchartrb
 
-=== Source Code:
+=== Manual Download:
 
 Download the latest release from http://code.google.com/p/gchartrb/downloads/list
 
-=== Git
+=== Git:
 You can checkout the git repository at http://github.com/deepakjois/gchartrb
 
-== Problems/TODO
+== TODO:
 The following features are pending :
 
-* Line Styles
-* Fill Area
-* Data Scaling for text encoding
+* Line Styles and Fill Areas
 * Googleometer and Map Charts
-
+* Data Scaling for Text Encoding
+* Download Image
+* Friendly Color Values
+* Easy Calculations for Stuff
+* Cleanup and DRY Validations
 
 == SYNOPSIS:
 TODO: write new

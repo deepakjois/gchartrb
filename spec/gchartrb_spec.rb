@@ -28,6 +28,22 @@ describe GoogleChart::Base do
       @dummy.height.should == 200
     end
 
+    it "should able to initialise size via a WIDTHxHEIGHT string" do
+      @dummy.size.should == "320x200"
+      @dummy.size = "400x500"
+      @dummy.width.should == 400
+      @dummy.height.should == 500
+    end
+
+    it "should raise an error if the height or width is greater than 1000" do
+      lambda { @dummy.height = 1001  }.should raise_error(ArgumentError)
+      lambda { @dummy.width = 1001  }.should raise_error(ArgumentError)
+    end
+
+    it "should raise error if width x height is greater than 300000" do
+      lambda { @dummy.size = "400x1000" }.should raise_error(ArgumentError)
+    end
+
     it "should have a default encoding of :simple" do
       @dummy.encoding.should == :simple
     end

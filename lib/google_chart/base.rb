@@ -50,10 +50,41 @@ module GoogleChart
       @title = title.gsub("\n", "|")
     end
 
-    # Size in WIDTHxHEIGHT format
+    # Sets the chart's width, in pixels. Raises +ArgumentError+
+    # if +width+ is less than 1 or greater than 1,000.
+    def width=(width)
+      if width.nil? || width < 1 || width > 1_000
+        raise ArgumentError, "Invalid width: #{width.inspect}"
+      end
+
+      @width = width
+    end
+
+    # Sets the chart's height, in pixels. Raises +ArgumentError+
+    # if +height+ is less than 1 or greater than 1,000.
+    def height=(height)
+      if height.nil? || height < 1 || height > 1_000
+        raise ArgumentError, "Invalid height: #{height.inspect}"
+      end
+
+      @height = height
+    end
+
+    # Returns the chart's size as "WIDTHxHEIGHT".
     def size
       "#{width}x#{height}"
     end
+
+    # Sets the chart's size as "WIDTHxHEIGHT". Raises +ArgumentError+
+    # if +width+ * +height+ is greater than 300,000 pixels.
+    def size=(size)
+      self.width, self.height = size.split("x").collect { |n| Integer(n) }
+
+      if (width * height) > 300_000
+        raise ArgumentError, "Invalid size: #{size.inspect} yields a graph with more than 300,000 pixels"
+      end
+    end
+
 
     # Set the data encoding to one of :simple, :text or :extended
     def encoding=(enc)

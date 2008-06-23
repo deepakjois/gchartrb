@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + "/core_ext"
     require File.dirname(__FILE__) + "/google_chart/modules/#{mod}"
 end
 
-%w(base line_chart linexy_chart sparkline_chart scatter_plot bar_chart radar_chart venn_diagram pie_chart).each do |type|
+%w(base line_chart linexy_chart sparkline_chart scatter_plot bar_chart radar_chart venn_diagram pie_chart map_chart).each do |type|
     require File.dirname(__FILE__) + "/google_chart/#{type}"
 end
 

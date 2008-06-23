@@ -51,9 +51,10 @@ module GoogleChart
     end
 
     # Sets the chart's width, in pixels. Raises +ArgumentError+
-    # if +width+ is less than 1 or greater than 1,000.
+    # if +width+ is less than 1 or greater than 1,000 (440 for maps).
     def width=(width)
-      if width.nil? || width < 1 || width > 1_000
+      width_max = @chart_type == 't' ? 440 : 1_000
+      if width.nil? || width < 1 || width > width_max
         raise ArgumentError, "Invalid width: #{width.inspect}"
       end
 
@@ -61,9 +62,10 @@ module GoogleChart
     end
 
     # Sets the chart's height, in pixels. Raises +ArgumentError+
-    # if +height+ is less than 1 or greater than 1,000.
+    # if +height+ is less than 1 or greater than 1,000 (220 for maps).
     def height=(height)
-      if height.nil? || height < 1 || height > 1_000
+      height_max = @chart_type == 't' ? 220 : 1_000
+      if height.nil? || height < 1 || height > height_max
         raise ArgumentError, "Invalid height: #{height.inspect}"
       end
 
@@ -105,6 +107,7 @@ module GoogleChart
       add_grid    if @grid
       add_markers if @markers
       add_bar_width_and_spacing if respond_to?(:add_bar_width_and_spacing)
+      add_map_parameters if respond_to?(:add_map_parameters)
       return @params
     end
 

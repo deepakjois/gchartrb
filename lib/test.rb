@@ -1,5 +1,5 @@
 require 'gchartrb'
-
+=begin
 # Pie Chart
 GoogleChart::PieChart.new do |pc|
   pc.data "Apples", 40
@@ -186,6 +186,30 @@ GoogleChart::SparklineChart.new do |sp|
   sp.data "", [3,10,20,37,40,25,68,75,89,99], "ff0000"
   puts "\nSparklines"
   puts sp.to_url
+end
+=end
+
+# Maps.
+mc = GoogleChart::MapChart.new do |chart|
+  chart.title = "Hospital Procedural Compliance Nationally"
+  chart.title_color = '000000'
+  chart.title_font_size = 18
+  
+  chart.width = 440
+  chart.height = 220
+  chart.geographical_area = :usa
+  
+  chart.data :NY, 100
+  chart.data :TX, 50
+  chart.data :CA, 25
+  
+  chart.default_color = 'FFFFFF'
+  chart.gradient = [ 'FF0000', '00FF00', '0000FF' ]
+  
+  chart.fill(:solid, :color => 'EAF7FE')
+  
+  puts "\nMap Chart"
+  puts chart.to_url
 end
 
 __END__

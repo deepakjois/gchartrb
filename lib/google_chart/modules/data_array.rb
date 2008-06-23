@@ -6,7 +6,7 @@ module GoogleChart
       mod.send(:extend,ClassMethods)
     end
 
-    def data(legend,series, color = nil)
+    def data(legend, series, color = nil)
       raise ArgumentError.new("Invalid value for series data") unless series.send(self.class.get_data_type)
       @data << series
       legend(legend)

@@ -13,6 +13,7 @@ lib/google_chart/bar_chart.rb
 lib/google_chart/base.rb
 lib/google_chart/line_chart.rb
 lib/google_chart/linexy_chart.rb
+lib/google_chart/map_chart.rb
 lib/google_chart/modules/axis.rb
 lib/google_chart/modules/color.rb
 lib/google_chart/modules/data_array.rb
@@ -27,6 +28,8 @@ lib/google_chart/scatter_plot.rb
 lib/google_chart/sparkline_chart.rb
 lib/google_chart/venn_diagram.rb
 lib/test.rb
+scripts/iso3166_en_code_lists.txt
+scripts/process_country_codes.rb
 spec/gchartrb/axis_spec.rb
 spec/gchartrb/bar_chart_spec.rb
 spec/gchartrb/fills_spec.rb

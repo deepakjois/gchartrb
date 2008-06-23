@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   require 'rake'
   s.name = "gchartrb"
-  s.version = "0.9.1"
+  s.version = "0.9"
   s.authors = ["Deepak Jois"]
   s.email = "deepak.jois@gmail.com"
   s.date = "2008-06-16"
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
   s.rdoc_options = ["--main", "README.txt"]
-  s.files = ["CREDITS", "History.txt", "Manifest.txt", "README.txt", "Rakefile", "TODO", "gchartrb.gemspec" ] + FileList["{lib,spec}/**/*"].to_a
+  s.files = ["CREDITS", "History.txt", "Manifest.txt", "README.txt", "Rakefile", "TODO", "gchartrb.gemspec" ] + FileList["{lib,spec,scripts}/**/*"].to_a
   s.require_paths = ["lib"]
   s.rubyforge_project = "gchartrb"
   s.rubygems_version = "1.1.1"

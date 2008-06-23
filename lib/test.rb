@@ -1,5 +1,4 @@
 require 'gchartrb'
-=begin
 # Pie Chart
 GoogleChart::PieChart.new do |pc|
   pc.data "Apples", 40
@@ -187,7 +186,6 @@ GoogleChart::SparklineChart.new do |sp|
   puts "\nSparklines"
   puts sp.to_url
 end
-=end
 
 # Maps.
 mc = GoogleChart::MapChart.new do |chart|

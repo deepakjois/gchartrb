@@ -23,6 +23,7 @@ lib/google_chart/modules/label.rb
 lib/google_chart/modules/legend.rb
 lib/google_chart/modules/markers.rb
 lib/google_chart/pie_chart.rb
+lib/google_chart/qr_code.rb
 lib/google_chart/radar_chart.rb
 lib/google_chart/scatter_plot.rb
 lib/google_chart/sparkline_chart.rb

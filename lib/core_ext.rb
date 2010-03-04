@@ -30,3 +30,11 @@ end
 class Numeric
   def is_numeric? ; true ; end
 end
+
+class String
+  def starts_with?(str)
+    str = str.to_str
+    head = self[0, str.length]
+    head == str
+  end
+end

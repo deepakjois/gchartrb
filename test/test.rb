@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift(File.expand_path("#{File.dirname(__FILE__)}/../lib"))
 require 'gchartrb'
 # Pie Chart
 GoogleChart::PieChart.new do |pc|

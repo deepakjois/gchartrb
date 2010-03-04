@@ -1,5 +1,15 @@
 $LOAD_PATH.unshift(File.expand_path("#{File.dirname(__FILE__)}/../lib"))
 require 'gchartrb'
+
+#QR Code
+GoogleChart::QrCode.new do |qr|
+  qr.data "Hello World"
+  qr.height = 200
+  qr.width = 200
+  puts "\nQR Code"
+  puts qr.to_url
+end
+
 # Pie Chart
 GoogleChart::PieChart.new do |pc|
   pc.data "Apples", 40

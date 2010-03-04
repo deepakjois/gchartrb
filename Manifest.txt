@@ -27,7 +27,6 @@ lib/google_chart/radar_chart.rb
 lib/google_chart/scatter_plot.rb
 lib/google_chart/sparkline_chart.rb
 lib/google_chart/venn_diagram.rb
-lib/test.rb
 scripts/iso3166_en_code_lists.txt
 scripts/process_country_codes.rb
 spec/gchartrb/axis_spec.rb

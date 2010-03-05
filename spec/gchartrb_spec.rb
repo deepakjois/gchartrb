@@ -111,7 +111,15 @@ describe GoogleChart, ".encode" do
     GoogleChart.encode(:extended, nil, 1).should == "__"
   end
 
-  it "encodes 0 with a max of 0 correctly" do
+  it "encodes 0 with a max of 0 correctly using extended" do
     GoogleChart.encode(:extended, 0, 0).should == "AA"
+  end
+
+  it "encodes 0 with a max of 0 correctly using simple" do
+    GoogleChart.encode(:simple, 0, 0).should == "A"
+  end
+
+  it "encodes 0 with a max of 0 correctly using text" do
+    GoogleChart.encode(:text, 0, 0).should == "0.0"
   end
 end

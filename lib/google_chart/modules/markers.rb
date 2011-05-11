@@ -75,8 +75,7 @@ module GoogleChart
                                                                                                               marker.data_set >= 0
 
       raise ArgumentError.new("Invalid data set value. Must be and integer less than #{@data[marker.data_set].length}") unless marker.data_point.is_a?(Integer) and
-                                                                                                                               marker.data_point < @data[marker.data_set].length and
-                                                                                                                               marker.data_point >= 0
+                                                                                                                               marker.data_point < @data[marker.data_set].length
       raise ArgumentError.new("Invalid priority. :priority must be either :low or :high") unless marker.priority == nil or
                                                                                                  PRIORITY.keys.include?(marker.priority)
 
